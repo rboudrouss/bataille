@@ -55,7 +55,3 @@ def _nb_placerL(jeu:Bataille, plateau : np.ndarray, types:list[int])->int:
 
 if __name__ == "__main__":
     print(nb_placerL(list(range(5))))
-
-"""
-
-"""
