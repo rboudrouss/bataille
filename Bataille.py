@@ -6,6 +6,7 @@ from constants import DIM_PLATEAU, LEN_B, MAX_IT
 from constants import Pos, PosList
 from Bateau import Bateau
 
+
 class Bataille:
     def __init__(self):
         self.plateau = np.zeros(DIM_PLATEAU, dtype=int)
@@ -15,7 +16,6 @@ class Bataille:
         self.bateaux: list[Bateau] = [None]*self.nbB
         self.coules: list[bool] = [False]*self.nbB
         self.end: bool = False
-
 
     @property
     def dim(self) -> Pos:
@@ -114,13 +114,12 @@ class Bataille:
         self.plateau = np.zeros(DIM_PLATEAU)
         self.victoire = False
 
-        for bateau in self.bateaux: # on libère la mémoire sur python lol
+        for bateau in self.bateaux:  # on libère la mémoire sur python lol
             del bateau
-        
-        self.bateaux= [None]*self.nbB
-        self.coules= [False]*self.nbB
-        self.end= False
 
+        self.bateaux = [None]*self.nbB
+        self.coules = [False]*self.nbB
+        self.end = False
 
     def joue(self, pos: Pos) -> int:
         """
@@ -147,15 +146,14 @@ class Bataille:
 
         print("touché")
         return 1
-    
-    def victoire(self)->bool:
+
+    def victoire(self) -> bool:
         if all(self.coules):
             print("victoire \\o/")
             print(self.plateau)
             self.end = True
             return True
         return False
-        
 
     @staticmethod
     def eq(grilleA: np.ndarray, grilleB: np.ndarray):

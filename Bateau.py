@@ -1,5 +1,6 @@
 from constants import Pos, PosList
 
+
 class Bateau:
     numbers: int = 0
 

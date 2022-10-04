@@ -13,44 +13,43 @@ from constants import Pos, PosList
 from constants import DIM_PLATEAU, LEN_B, MAX_IT
 from Bataille import Bataille
 
-def nb_placer(type:int)->int:
+
+def nb_placer(type: int) -> int:
     j = Bataille()
-    ym,xm = j.dim
-    nb : int = 0
+    ym, xm = j.dim
+    nb: int = 0
     for y in range(ym):
         for x in range(xm):
             for dir in range(2):
-                if j.peut_placer((y,x), type, dir):
+                if j.peut_placer((y, x), type, dir):
                     nb += 1
     return nb
 
-def nb_placerL(types:list[int])->int:
+
+def nb_placerL(types: list[int]) -> int:
     j = Bataille()
-    return _nb_placerL(j, j.plateau.copy(),types)
+    return _nb_placerL(j, j.plateau.copy(), types)
 
 
-def _nb_placerL(jeu:Bataille, plateau : np.ndarray, types:list[int])->int:
+def _nb_placerL(jeu: Bataille, plateau: np.ndarray, types: list[int]) -> int:
     if not types:
         return 0
-    
+
     jeu.plateau = plateau
-    
-    
-    ym,xm = jeu.dim
-    nb : int = 0
+
+    ym, xm = jeu.dim
+    nb: int = 0
     for y in range(ym):
         for x in range(xm):
             for dir in range(2):
-                if jeu.peut_placer((y,x), types[0], dir):
+                if jeu.peut_placer((y, x), types[0], dir):
                     plateau = jeu.plateau.copy()
-                    jeu.place((y,x), types[0], dir)
+                    jeu.place((y, x), types[0], dir)
                     nb += _nb_placerL(jeu, jeu.plateau, types[1:])
                     jeu.plateau = plateau
                     if len(types) == 1:
-                        nb +=1
-                        print(nb)
+                        nb += 1
     return nb
-
 
 
 if __name__ == "__main__":
