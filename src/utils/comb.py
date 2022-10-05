@@ -50,3 +50,5 @@ def _nb_placerL(jeu: Engine, plateau: np.ndarray, types: list[int]) -> int:
                         nb += 1
     return nb
 
+
+# TODO estimation aléatoire tralala TME2

@@ -53,11 +53,11 @@ class Engine:
             1 -> horizontale
         """
         if not self.peut_placer(pos, type, direction):
-            print("bateau {type} pas placé sur {pos}, ce n'est pas libre")
+            print("Warning: bateau {type} pas placé sur {pos}, ce n'est pas libre")
             return
         # sinon bateau déjà placé c'est bizarre
         if self.bateaux[type-1]:
-            print("warning : bateau déjà placé (?)")
+            print("Warning : bateau déjà placé (?)")
 
         size: int = self.bateauxL[type-1]
         self.bateaux[type-1] = Bateau(size, direction, pos)
@@ -86,7 +86,7 @@ class Engine:
 
             if i > MAX_IT:
                 print(
-                    f"Plus de {MAX_IT} itération dans place_alea avec type {type}")
+                    f"Error : Plus de {MAX_IT} itération dans place_alea avec type {type}")
                 return
 
         self.place(pos, type, direction)
@@ -125,7 +125,7 @@ class Engine:
         si coulé retourne aussi les positions du bateau
         """
         if self.end:
-            print("le jeu est terminé")
+            print("Warning: le jeu est terminé, mais ça joue encore ?")
             return -1, None
         y, x = pos
         type: int = self.plateau[y, x]
@@ -143,13 +143,10 @@ class Engine:
             self.coules[type-1] = True
             return -1 if self.victoire() else 2, bateau.get_pos()
 
-        print("touché")
         return 1, None
 
     def victoire(self) -> bool:
         if all(self.coules):
-            print("victoire \\o/")
-            print(self.plateau)
             self.end = True
             return True
         return False

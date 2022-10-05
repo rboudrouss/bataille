@@ -33,6 +33,7 @@ class AbstractPlayer(ABC):
         self.dim = self.game.dim
         self.plateau = np.zeros(self.dim, dtype=int)
         self.end: bool = False
+        self.nbCoup = 0
 
         with open("data/messages.json", 'r') as f:
             self.messages: MessDict = loads(f.read())
@@ -42,6 +43,7 @@ class AbstractPlayer(ABC):
         retourne 0 si raté, 1 si touché, 2 si coulé et -1 si le jeu est terminé
         si coulé retourne aussi les positions du bateau
         """
+        self.nbCoup += 1
         return self.game.joue(pos)
     
     def handle_feedback(self, feedback: int, posL: PosList | None, pos: Pos) -> None:
