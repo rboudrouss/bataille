@@ -1,4 +1,4 @@
-from constants import Pos, PosList
+from utils.constants import Pos, PosList
 
 
 class Bateau:

@@ -1,4 +1,4 @@
-Pos = tuple[int, int]
+Pos = tuple[int, int] # | list[int]
 PosList = list[Pos]
 
 

@@ -1,19 +1,19 @@
-import numpy as np
+import numpy as np # type: ignore
 from random import randint
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt # type: ignore
 
-from constants import DIM_PLATEAU, LEN_B, MAX_IT
-from constants import Pos, PosList
-from Bateau import Bateau
+from utils.constants import DIM_PLATEAU, LEN_B, MAX_IT
+from utils.constants import Pos, PosList
+from Game.Bateau import Bateau
 
 
-class Bataille:
+class Engine:
     def __init__(self):
         self.plateau = np.zeros(DIM_PLATEAU, dtype=int)
         self.bateauxL = LEN_B
         self.nbB: int = len(self.bateauxL)
 
-        self.bateaux: list[Bateau] = [None]*self.nbB
+        self.bateaux: list[Bateau | None] = [None]*self.nbB
         self.coules: list[bool] = [False]*self.nbB
         self.end: bool = False
 
@@ -56,7 +56,8 @@ class Bataille:
             print("bateau {type} pas placé sur {pos}, ce n'est pas libre")
             return
         # sinon bateau déjà placé c'est bizarre
-        # assert not self.bateaux[type-1]
+        if self.bateaux[type-1]:
+            print("warning : bateau déjà placé (?)")
 
         size: int = self.bateauxL[type-1]
         self.bateaux[type-1] = Bateau(size, direction, pos)
@@ -74,7 +75,7 @@ class Bataille:
 
         size: int = self.bateauxL[type-1]
 
-        pos = [randint(0, self.dim[0]-1), randint(0, self.dim[1]-1)]
+        pos = (randint(0, self.dim[0]-1), randint(0, self.dim[1]-1))
         direction = randint(0, 1)
 
         i: int = 0
@@ -82,7 +83,7 @@ class Bataille:
         while not self.peut_placer(pos, type, direction):
             i += 1
 
-            pos = [randint(0, self.dim[0]-1), randint(0, self.dim[1]-1)]
+            pos = (randint(0, self.dim[0]-1), randint(0, self.dim[1]-1))
             direction = randint(0, 1)
 
             if i > MAX_IT:
@@ -112,7 +113,6 @@ class Bataille:
         réinitialise à 0 l'objet
         """
         self.plateau = np.zeros(DIM_PLATEAU)
-        self.victoire = False
 
         for bateau in self.bateaux:  # on libère la mémoire sur python lol
             del bateau
@@ -123,18 +123,22 @@ class Bataille:
 
     def joue(self, pos: Pos) -> int:
         """
-        retourne 0 si raté, 1 si touché, 2 si coulé
+        retourne 0 si raté, 1 si touché, 2 si coulé et -1 si le jeu est terminé
         """
         if self.end:
             print("le jeu est terminé")
-            return
+            return -1
         y, x = pos
         type: int = self.plateau[y, x]
         if type == 0:
             print("raté")
             return 0
 
-        bateau = self.bateaux[type-1]
+        if self.bateaux[type-1] is None:
+            print("Error : self.bateaux{} is None <!>".format(type-1))
+            exit()
+
+        bateau : Bateau = self.bateaux[type-1] # type: ignore
 
         bateau.touche(pos)
         if bateau.est_coule():
