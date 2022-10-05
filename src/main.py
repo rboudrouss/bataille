@@ -9,6 +9,7 @@ les bateaux sont :
 """
 
 from Game.Engine import Engine
+from Player.HeuristicPlayer import HeuristicPlayer
 from Player.HumanPlayer import HumanPlayer
 from Player.RandomPlayer import RandomPlayer
 from utils.comb import nb_placer
@@ -20,5 +21,12 @@ if __name__ == "__main__":
     assert game.isPlayable()
 
     player = RandomPlayer(game)
+    player.main_loop()
+
+    game.reset()
+    game.genere_grille()
+
+    assert game.isPlayable()
+    player = HeuristicPlayer(game)
     player.main_loop()
 

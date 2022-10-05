@@ -22,7 +22,11 @@ class Bateau:
                 self.poss.append((self.origine[0]+i, self.origine[1]))
 
     def touche(self, pos: Pos) -> None:
-        assert pos in self.poss
+        if pos not in self.poss:
+            print(pos)
+            print(self.poss)
+            assert pos in self.poss
+
         self.damage.append(pos)
 
     def est_coule(self) -> bool:

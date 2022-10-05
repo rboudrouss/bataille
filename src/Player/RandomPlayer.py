@@ -11,14 +11,14 @@ from .AbstractPlayer import AbstractPlayer
 class RandomPlayer(AbstractPlayer):
     def __init__(self, game: Engine) -> None:
         super().__init__(game)
-        self.available = [(y, x) for y in range(self.dim[0])
-                          for x in range(self.dim[1])]
+        self.available = {(y, x) for y in range(self.dim[0])
+                          for x in range(self.dim[1])}
         self.lastCoup = (0, 0)
         self.lastfeedback = 0
 
     def play(self) -> None:
-        y, x = choice(self.available)
-        self.available.pop(self.available.index((y, x)))
+        y, x = choice(list(self.available))
+        self.available.discard((y, x))
         self.lastfeedback, coule = self.interact((y, x))
 
         self.handle_feedback(self.lastfeedback, coule, (x, y))

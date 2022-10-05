@@ -110,7 +110,7 @@ class Engine:
         """
         réinitialise à 0 l'objet
         """
-        self.plateau = np.zeros(DIM_PLATEAU)
+        self.plateau = np.zeros(DIM_PLATEAU, dtype=int)
 
         for bateau in self.bateaux:  # on libère la mémoire sur python lol
             del bateau
