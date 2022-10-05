@@ -8,7 +8,15 @@ les bateaux sont :
 5 : un torpilleur (2 cases)
 """
 
+from Game.Engine import Engine
+from Player.HumanPlayer import HumanPlayer
 from utils.comb import nb_placer
 
 if __name__ == "__main__":
-    print(nb_placer(1))
+    game = Engine()
+    game.genere_grille()
+
+    assert game.isPlayable()
+
+    player = HumanPlayer(game)
+    player.mainLoop()

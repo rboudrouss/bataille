@@ -1,10 +1,10 @@
-import numpy as np # type: ignore
+import numpy as np  # type: ignore
 from random import randint
-import matplotlib.pyplot as plt # type: ignore
+import matplotlib.pyplot as plt  # type: ignore
 
 from utils.constants import DIM_PLATEAU, LEN_B, MAX_IT
 from utils.constants import Pos, PosList
-from Game.Bateau import Bateau
+from .Bateau import Bateau
 
 
 class Engine:
@@ -73,8 +73,6 @@ class Engine:
         Place aléatoirement le bateau de type type
         """
 
-        size: int = self.bateauxL[type-1]
-
         pos = (randint(0, self.dim[0]-1), randint(0, self.dim[1]-1))
         direction = randint(0, 1)
 
@@ -121,35 +119,32 @@ class Engine:
         self.coules = [False]*self.nbB
         self.end = False
 
-    def joue(self, pos: Pos) -> int:
+    def joue(self, pos: Pos) -> tuple[int, PosList | None]:
         """
         retourne 0 si raté, 1 si touché, 2 si coulé et -1 si le jeu est terminé
+        si coulé retourne aussi les positions du bateau
         """
         if self.end:
             print("le jeu est terminé")
-            return -1
+            return -1, None
         y, x = pos
         type: int = self.plateau[y, x]
         if type == 0:
-            print("raté")
-            return 0
+            return 0, None
 
         if self.bateaux[type-1] is None:
             print("Error : self.bateaux{} is None <!>".format(type-1))
             exit()
 
-        bateau : Bateau = self.bateaux[type-1] # type: ignore
+        bateau: Bateau = self.bateaux[type-1]  # type: ignore
 
         bateau.touche(pos)
         if bateau.est_coule():
             self.coules[type-1] = True
-            print("coulé")
-            print("le bateau se trouvait aux cases", bateau.poss)
-            self.victoire()
-            return 2
+            return -1 if self.victoire() else 2, bateau.get_pos()
 
         print("touché")
-        return 1
+        return 1, None
 
     def victoire(self) -> bool:
         if all(self.coules):
@@ -159,8 +154,11 @@ class Engine:
             return True
         return False
 
+    def isPlayable(self) -> bool:
+        return all(self.bateaux)
+
     @staticmethod
-    def eq(grilleA: np.ndarray, grilleB: np.ndarray):
+    def eq(grilleA: np.ndarray, grilleB: np.ndarray) -> bool:
         """
         vérifie que deux grilles sont égales
         """

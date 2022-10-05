@@ -27,3 +27,8 @@ class Bateau:
 
     def est_coule(self) -> bool:
         return set(self.poss) == set(self.damage)
+    
+    def get_pos(self)->PosList|None:
+        if self.est_coule():
+            return self.poss
+        return None
