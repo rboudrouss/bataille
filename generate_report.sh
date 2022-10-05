@@ -1,1 +1,1 @@
-pandoc rapport/*.md -o rapport.pdf
+pandoc rapport/*.md --listings -H rapport/theme.tex --pdf-engine=xelatex -o rapport.pdf
