@@ -10,6 +10,7 @@ les bateaux sont :
 
 from Game.Engine import Engine
 from Player.HumanPlayer import HumanPlayer
+from Player.RandomPlayer import RandomPlayer
 from utils.comb import nb_placer
 
 if __name__ == "__main__":
@@ -18,5 +19,6 @@ if __name__ == "__main__":
 
     assert game.isPlayable()
 
-    player = HumanPlayer(game)
-    player.mainLoop()
+    player = RandomPlayer(game)
+    player.main_loop()
+
