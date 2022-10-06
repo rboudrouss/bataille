@@ -53,7 +53,8 @@ class Engine:
             1 -> horizontale
         """
         if not self.peut_placer(pos, type, direction):
-            print("Warning: bateau {type} pas placé sur {pos}, ce n'est pas libre")
+            print(
+                "Warning: bateau {type} pas placé sur {pos}, ce n'est pas libre")
             return
         # sinon bateau déjà placé c'est bizarre
         if self.bateaux[type-1]:

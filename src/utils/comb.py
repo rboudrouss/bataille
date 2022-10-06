@@ -7,7 +7,7 @@ on sait qu'il sera compliqué (en python en tout cas) de pouvoir
 déterminer le nombre de plateau possible dans le jeu avec les conditions
 fixé au départ
 """
-# TODO améliorer les fonctions au moins visuellement 
+# TODO améliorer les fonctions au moins visuellement
 
 import numpy as np
 from Game.Engine import Engine

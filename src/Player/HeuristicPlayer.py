@@ -19,7 +19,7 @@ class HeuristicPlayer(RandomPlayer):
         while self.queueCoups and self.lastfeedback != -1:
             y, x = self.queueCoups.pop()
             self.lastCoup = (y, x)
-            self.available.discard((y,x))
+            self.available.discard((y, x))
 
             self.lastfeedback, coule = self.interact((y, x))
             self.handle_feedback(self.lastfeedback, coule, (x, y))

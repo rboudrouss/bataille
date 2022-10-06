@@ -37,7 +37,7 @@ class AbstractPlayer(ABC):
 
         with open("data/messages.json", 'r') as f:
             self.messages: MessDict = loads(f.read())
-    
+
     def interact(self, pos: Pos) -> tuple[int, PosList | None]:
         """
         retourne 0 si raté, 1 si touché, 2 si coulé et -1 si le jeu est terminé
@@ -45,7 +45,7 @@ class AbstractPlayer(ABC):
         """
         self.nbCoup += 1
         return self.game.joue(pos)
-    
+
     def handle_feedback(self, feedback: int, posL: PosList | None, pos: Pos) -> None:
         """
         affiche ce qu'il faut afficher à l'utilisateur selon le feedback de son action
@@ -88,7 +88,7 @@ class AbstractPlayer(ABC):
         """
         if DEBUG:
             print(self.game.plateau)
-    
+
     @abstractclassmethod
     def main_loop(self) -> None:
         """

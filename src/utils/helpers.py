@@ -1,27 +1,30 @@
 from .constants import Pos, PosList
 
 
-def valid_posinput(inp:str) -> bool:
+def valid_posinput(inp: str) -> bool:
     """
     Vérifie que l'input de la position émie par l'humain est bien valide
     sous la force x,y ou (x,y)
     """
-    inp = inp.replace(" ","").replace("(","").replace(")","")
+    inp = inp.replace(" ", "").replace("(", "").replace(")", "")
     return inp.count(",") == 1 and inp[:inp.index(",")].isdigit() and inp[inp.index(",")+1:].isdigit()
 
-def convert_posinput(inp:str) -> Pos:
+
+def convert_posinput(inp: str) -> Pos:
     """
     Converti un string sous la forme "x,y" en un tuple (x,y) avec x et y des int
     """
-    inp = inp.replace(" ","").replace("(","").replace(")","")
-    x,y = map(int,inp.split(","))
-    return x,y
+    inp = inp.replace(" ", "").replace("(", "").replace(")", "")
+    x, y = map(int, inp.split(","))
+    return x, y
+
 
 def str_PosL(posL: PosList) -> str:
     """
     convertie une liste de position en str
     """
-    return ", ".join(map(lambda x : str((x[1],x[0])),posL))
+    return ", ".join(map(lambda x: str((x[1], x[0])), posL))
 
-def orderl(*l:int)->list[int]:
+
+def orderl(*l: int) -> list[int]:
     return list(sorted(list(l)))
