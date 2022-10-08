@@ -1,24 +1,51 @@
-from utils.constants import Pos, PosList
+from utils.constants import DIR_L, HOR_D, MIN_LB, VER_D
+from utils.types import Pos, PosList
+from utils.helpers import str_PosL
 
 
 class Bateau:
 
-    def __init__(self, length: int, direction: int, pos: Pos, name: str = ""):
+    def __init__(
+        self,
+        posL: PosList | None = None,
+        length: int | None = None,
+        direction: int | None = None,
+        pos: Pos | None = None,
+        name: str | None = None
+    ):
         """
-        pos c'est (y,x)
-        """
-        self.length: int = length
-        self.damage: PosList = []
-        self.direction = direction
-        self.origine = pos
-        self.name = name if name else str(length) + " " + str(pos)
+        si un posL est attribué, on force les valeurs à travers les listes de coordonées
+        sinon on calcul les listes des coordonnées à partir des valeurs renseignés
 
-        self.poss: PosList = []
-        for i in range(length):
-            if direction:
-                self.poss.append((self.origine[0], self.origine[1]+i))
-            else:
-                self.poss.append((self.origine[0]+i, self.origine[1]))
+        pos c'est (y,x)
+        direction : 0 verical, 1 horizontal
+        """
+        self.damage: PosList = []
+
+        if not posL:
+            assert length and length >= MIN_LB and direction in DIR_L and pos
+
+            self.length: int = length
+            self.direction = direction
+            self.origine = pos
+            self.name = name if name else str(length) + " " + str(pos)
+
+            self.poss: PosList = []
+            for i in range(length):
+                if direction:
+                    self.poss.append((self.origine[0], self.origine[1]+i))
+                else:
+                    self.poss.append((self.origine[0]+i, self.origine[1]))
+        else:
+            assert len(posL) >= MIN_LB
+            assert posL[0][0] == posL[1][0] or posL[0][1] == posL[1][1]
+
+            self.poss = posL.copy()
+            self.length = len(self.poss)
+            self.name = "bateau in " + str_PosL(posL)
+            self.origine = min(map(lambda x: x[0], self.poss)), \
+                min(map(lambda x: x[1], self.poss))
+            self.direction = HOR_D if posL[0][1] - posL[1][1] else VER_D
 
     def touche(self, pos: Pos) -> None:
         assert pos in self.poss

@@ -2,8 +2,8 @@ import numpy as np  # type: ignore
 from random import randint
 import matplotlib.pyplot as plt  # type: ignore
 
-from utils.constants import DIM_PLATEAU, LEN_B, MAX_IT
-from utils.constants import Pos, PosList
+from utils.constants import COULE_F, DIM_PLATEAU, END_F, LEN_B, MAX_IT, RATE_F, TOUCHE_F
+from utils.types import Pos, PosList
 from .Bateau import Bateau
 
 
@@ -61,7 +61,8 @@ class Engine:
             print("Warning : bateau déjà placé (?)")
 
         size: int = self.bateauxL[type-1]
-        self.bateaux[type-1] = Bateau(size, direction, pos)
+        self.bateaux[type-1] = Bateau(length=size,
+                                      direction=direction, pos=pos)
 
         if direction:
             self.plateau[pos[0], pos[1]:pos[1]+size] = type
@@ -127,11 +128,11 @@ class Engine:
         """
         if self.end:
             print("Warning: le jeu est terminé, mais ça joue encore ?")
-            return -1, None
+            return END_F, None
         y, x = pos
         type: int = self.plateau[y, x]
         if type == 0:
-            return 0, None
+            return RATE_F, None
 
         if self.bateaux[type-1] is None:
             print("Error : self.bateaux{} is None <!>".format(type-1))
@@ -142,9 +143,9 @@ class Engine:
         bateau.touche(pos)
         if bateau.est_coule():
             self.coules[type-1] = True
-            return -1 if self.victoire() else 2, bateau.get_pos()
+            return END_F if self.victoire() else COULE_F, bateau.get_pos()
 
-        return 1, None
+        return TOUCHE_F, None
 
     def victoire(self) -> bool:
         if all(self.coules):

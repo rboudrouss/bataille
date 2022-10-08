@@ -1,4 +1,4 @@
-from .constants import Pos, PosList
+from .types import Pos, PosList
 
 
 def valid_posinput(inp: str) -> bool:

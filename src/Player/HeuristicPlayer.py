@@ -1,6 +1,7 @@
 from Game.Engine import Engine
 from Player.RandomPlayer import RandomPlayer
-from utils.constants import Pos, PosList
+from utils.constants import COULE_F, END_F, NOINFO_P, RATE_F, TOUCHE_F
+from utils.types import Pos, PosList
 
 
 class HeuristicPlayer(RandomPlayer):
@@ -8,7 +9,7 @@ class HeuristicPlayer(RandomPlayer):
         super().__init__(game)
 
         self.huntMode = False
-        self.lastfeedback = 0
+        self.lastfeedback = 10  # dumb feedback, no existing
         self.queueCoups: PosList = []
 
     def play_hunt(self) -> None:
@@ -22,7 +23,7 @@ class HeuristicPlayer(RandomPlayer):
         """
         self.add_adjacentCase(self.lastCoup)
 
-        while self.queueCoups and self.lastfeedback != -1:
+        while self.queueCoups and self.lastfeedback != END_F:
             y, x = self.queueCoups.pop()
             self.lastCoup = (y, x)
             self.available.discard((y, x))
@@ -30,7 +31,7 @@ class HeuristicPlayer(RandomPlayer):
             self.lastfeedback, coule = self.interact((y, x))
             self.handle_feedback(self.lastfeedback, coule, (x, y))
 
-            if self.lastfeedback == 1:
+            if self.lastfeedback == TOUCHE_F:
                 self.add_adjacentCase(self.lastCoup)
 
         self.huntMode = False
@@ -42,7 +43,7 @@ class HeuristicPlayer(RandomPlayer):
         """
         for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             if 0 <= pos[0]+dy < self.dim[0] and 0 <= pos[1]+dx < self.dim[1] and \
-            self.plateau[pos[0]+dy, pos[1]+dx] == 0:
+                    self.plateau[pos[0]+dy, pos[1]+dx] == NOINFO_P:
                 self.queueCoups.append((pos[0]+dy, pos[1]+dx))
 
     def play_random(self) -> None:
@@ -53,7 +54,7 @@ class HeuristicPlayer(RandomPlayer):
         (vu que la taille minimal d'un bateau est 2, il est donc impossible de poser
         un bateau sans avoir une case tel que x ou y divisble par 2)
         """
-        while self.lastfeedback in [0, 2]:
+        while self.lastfeedback not in [TOUCHE_F, END_F]:
             super().play()
         self.huntMode = True
         print("switch to hunt mode ---------")
@@ -62,7 +63,7 @@ class HeuristicPlayer(RandomPlayer):
         """
         loop principale du mode de jeu heuristique
         """
-        while self.lastfeedback != -1:
+        while not self.end:
             if self.huntMode:
                 self.play_hunt()
             else:

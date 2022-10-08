@@ -4,7 +4,7 @@ from random import randrange, choice
 
 from Game.Engine import Engine
 from utils.helpers import convert_posinput, orderl, str_PosL, valid_posinput
-from utils.constants import MessDict, Pos, PosList
+from utils.types import MessDict, Pos, PosList
 from .AbstractPlayer import AbstractPlayer
 
 
@@ -19,9 +19,9 @@ class RandomPlayer(AbstractPlayer):
     def play(self) -> None:
         y, x = choice(list(self.available))
         self.available.discard((y, x))
-        self.lastfeedback, coule = self.interact((y, x))
+        self.lastfeedback, posL = self.interact((y, x))
 
-        self.handle_feedback(self.lastfeedback, coule, (x, y))
+        self.handle_feedback(self.lastfeedback, posL, (x, y))
         self.lastCoup = (y, x)
 
     def main_loop(self) -> None:
