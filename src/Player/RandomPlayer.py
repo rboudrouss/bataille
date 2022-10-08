@@ -3,6 +3,7 @@ from json import loads
 from random import randrange, choice
 
 from Game.Engine import Engine
+from utils.constants import MAX_IT
 from utils.helpers import convert_posinput, orderl, str_PosL, valid_posinput
 from utils.types import MessDict, Pos, PosList
 from .AbstractPlayer import AbstractPlayer
@@ -25,7 +26,12 @@ class RandomPlayer(AbstractPlayer):
         self.lastCoup = (y, x)
 
     def main_loop(self) -> None:
-        while not self.end:
+        i = 0
+        while not self.end :
             # self.show_game_info()
             self.play()
+            i+=1
+            if i > MAX_IT:
+                print("Error : i : {} > MAXIT {}".format(i,MAX_IT))
+                exit(1)
         print(self.messages['RandomNbWin'].format(self.nbCoup))

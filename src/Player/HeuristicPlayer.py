@@ -1,6 +1,6 @@
 from Game.Engine import Engine
 from Player.RandomPlayer import RandomPlayer
-from utils.constants import COULE_F, END_F, NOINFO_P, RATE_F, TOUCHE_F
+from utils.constants import COULE_F, END_F, MAX_IT, NOINFO_P, RATE_F, TOUCHE_F
 from utils.types import Pos, PosList
 
 
@@ -63,9 +63,14 @@ class HeuristicPlayer(RandomPlayer):
         """
         loop principale du mode de jeu heuristique
         """
+        i = 0
         while not self.end:
             if self.huntMode:
                 self.play_hunt()
             else:
                 self.play_random()
+            i+=1
+            if i > MAX_IT:
+                print("Error : i : {} > MAXIT {}".format(i,MAX_IT))
+                exit(1)
         print("le joueur heuristique a trouvé après {} coups".format(self.nbCoup))

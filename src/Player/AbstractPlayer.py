@@ -138,6 +138,7 @@ class AbstractPlayer(ABC):
 
     @abstractclassmethod
     def play(self, pos: Pos) -> tuple[int, PosList | None]:
+        # TODO maybe centralize play and make max int verification in this mainloop ?
         raise NotImplementedError
 
     @abstractclassmethod
@@ -145,4 +146,6 @@ class AbstractPlayer(ABC):
         """
         loop principale du jeu
         """
+        # while not self.end:
+        #    self.play()
         raise NotImplementedError
