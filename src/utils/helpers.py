@@ -12,8 +12,9 @@ def valid_posinput(inp: str) -> bool:
 
 def convert_posinput(inp: str) -> Pos:
     """
-    Converti un string sous la forme "x,y" en un tuple (x,y) avec x et y des int
+    Converti un string sous la forme "x,y" ou "(x,y)" en un tuple (x,y) avec x et y des int
     """
+    assert valid_posinput(inp)
     inp = inp.replace(" ", "").replace("(", "").replace(")", "")
     x, y = map(int, inp.split(","))
     return x, y
@@ -27,4 +28,7 @@ def str_PosL(posL: PosList) -> str:
 
 
 def orderl(*l: int) -> list[int]:
+    """
+    returne une liste ordonnée des paramètres données
+    """
     return list(sorted(list(l)))

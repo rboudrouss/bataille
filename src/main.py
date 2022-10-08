@@ -23,7 +23,7 @@ if __name__ == "__main__":
     player = RandomPlayer(game)
     player.main_loop()
 
-    print("-"*30)
+    print("-"*60)
 
     game.reset()
     game.genere_grille()
@@ -32,9 +32,9 @@ if __name__ == "__main__":
     player = HeuristicPlayer(game)
     player.main_loop()
 
-    print("-"*30)
+    print("-"*60)
 
-    if not input("Voulez vous jouer au jeu vous même ? [y]/n ").strip().capitalize().startswith("N"):
+    if input("Voulez vous jouer au jeu vous même ? y/[n] ").strip().capitalize().startswith("Y"):
         game.reset()
         game.genere_grille()
 

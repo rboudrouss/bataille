@@ -22,6 +22,7 @@ class AbstractPlayer(ABC):
         pour le self.plateau :
         0 : Pas d'information
         1 : touché
+        2 : coulé
         -1 : raté
         """
 
@@ -48,7 +49,8 @@ class AbstractPlayer(ABC):
 
     def handle_feedback(self, feedback: int, posL: PosList | None, pos: Pos) -> None:
         """
-        affiche ce qu'il faut afficher à l'utilisateur selon le feedback de son action
+        affiche ce qu'il faut afficher à l'utilisateur selon le feedback de son actioe
+        et modifie la liste des informations donné par le jeu
         """
         x, y = pos
 
@@ -81,6 +83,19 @@ class AbstractPlayer(ABC):
 
             self.plateau[ymin:ymax+1, xmin:xmax+1] = 2
 
+    def interact_n_handle(self, pos: Pos) -> tuple[int, PosList | None]:
+        """
+        FIXME might be buggy, gotta check pos x,y y,x ?
+        INFO not used rn, probably would, would make code less messy
+
+        interact and handle feedbake
+        litteraly just excecute both self.interact & self.handle_feedback
+        and returns the feedback
+        """
+        r = self.interact(pos)
+        self.handle_feedback(*r, pos)
+        return r
+
     def show_game_info(self) -> None:
         """
         Affiche le plateau du jeu
@@ -88,6 +103,16 @@ class AbstractPlayer(ABC):
         """
         if DEBUG:
             print(self.game.plateau)
+
+    def show_info(self) -> None:
+        """
+        Affiche le plateau des informations donnés par le jeu
+        """
+        print(self.plateau)
+
+    @abstractclassmethod
+    def play(self, pos: Pos) -> tuple[int, PosList | None]:
+        raise NotImplementedError
 
     @abstractclassmethod
     def main_loop(self) -> None:

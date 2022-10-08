@@ -2,7 +2,6 @@ from utils.constants import Pos, PosList
 
 
 class Bateau:
-    numbers: int = 0
 
     def __init__(self, length: int, direction: int, pos: Pos, name: str = ""):
         """
@@ -22,10 +21,7 @@ class Bateau:
                 self.poss.append((self.origine[0]+i, self.origine[1]))
 
     def touche(self, pos: Pos) -> None:
-        if pos not in self.poss:
-            print(pos)
-            print(self.poss)
-            assert pos in self.poss
+        assert pos in self.poss
 
         self.damage.append(pos)
 

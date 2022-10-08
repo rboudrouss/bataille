@@ -5,7 +5,7 @@
     "playFinished": "Le jeu est terminé, veuillez reinitialiser le jeu pour jouer à nouveau",
     "askInput": "Veuillez entrez les coordonnées sous la forme \"x,y\" : ",
     "rate": "Raté ! La case est {}",
-    "start": "Le jeu commence \\o/, le tableau et de dimmension {}.",
+    "start": "Le jeu commence \\o/, le tableau est de dimmension {}.",
     "showState": "Voici l'état du plateau : ",
     "RandomNbWin": "Le joueur aléatoir y est arrivé en {} coups !"
 }

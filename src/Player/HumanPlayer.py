@@ -23,8 +23,6 @@ class HumanPlayer(AbstractPlayer):
 
         self.handle_feedback(*self.interact((y, x)), (x, y))
 
-    def show_info(self) -> None:
-        print(self.plateau)
 
     def main_loop(self):
         """
