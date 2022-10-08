@@ -1,5 +1,7 @@
 #
+#
 # Config général du jeu :
+#
 #
 MAX_IT = 100
 MIN_LB = 2  # minimum taille bateau : 2
@@ -16,10 +18,11 @@ LEN_B = [5, 4, 3, 3, 2]
 # par exemple affiche le plateau enemie en mode HumanPlayer
 DEBUG = True
 
-
+#
 #
 # Config & convention dev
 # **<!> ne pas toucher sauf si vous savez ce que vous faite <!>**
+#
 #
 
 # direction du bateau 0 si vertical, 1 si horizontal
