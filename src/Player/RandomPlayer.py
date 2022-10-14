@@ -15,7 +15,7 @@ class RandomPlayer(AbstractPlayer):
         self.available = {(y, x) for y in range(self.dim[0])
                           for x in range(self.dim[1])}
         self.lastCoup = (0, 0)
-        self.lastfeedback = 0
+        self.lastfeedback = 0  # je l'aime mon copaiiiiiin~~
 
     def play(self) -> None:
         y, x = choice(list(self.available))
