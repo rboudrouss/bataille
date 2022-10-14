@@ -4,8 +4,6 @@ from random import randrange, choice
 
 from Game.Engine import Engine
 from utils.constants import MAX_IT
-from utils.helpers import convert_posinput, orderl, str_PosL, valid_posinput
-from utils.types import MessDict, Pos, PosList
 from .AbstractPlayer import AbstractPlayer
 
 

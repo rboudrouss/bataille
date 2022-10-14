@@ -3,7 +3,8 @@ import numpy as np
 from json import loads
 
 from Game.Engine import Engine
-from utils.constants import COULE_F, COULE_P, DEBUG, END_F, FEEDBACK_L, INFOP_L, NOINFO_P, RATE_F, RATE_P, TOUCHE_F, TOUCHE_P
+from utils.constants import COULE_F, COULE_P, DEBUG, END_F\
+    , FEEDBACK_L, INFOP_L, NOINFO_P, RATE_F, RATE_P, TOUCHE_F, TOUCHE_P
 from utils.types import Pos, PosList, MessDict
 from utils.helpers import orderl, str_PosL
 
@@ -11,7 +12,7 @@ from utils.helpers import orderl, str_PosL
 class InfoP(np.ndarray):
     """
     initialise une liste numpy selon les dimensions données mais
-    ne peux accépter que les valeurs qui sont dans la liste NOINFO_P
+    ne peux accépter que les valeurs qui sont dans la liste INFOP_L
     """
     def __new__(cls, dim: Pos):
         zero = np.full(dim, NOINFO_P, dtype=int)
@@ -149,3 +150,5 @@ class AbstractPlayer(ABC):
         # while not self.end:
         #    self.play()
         raise NotImplementedError
+    
+# TODO fonctions qui retourne les stats du joueur

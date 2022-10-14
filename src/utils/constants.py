@@ -5,18 +5,20 @@
 #
 
 # minimum (inclu) taille bateau : 2
-MIN_LB = 2 
+MIN_LB = 2
 
 # dimension du plateau de jeu en y,x
-DIM_PLATEAU = (10, 10) 
+DIM_PLATEAU = (10, 10)
 
 # maximum d'itération pour chaque boucle while (on est jamais trop prudent)
 MAX_IT = DIM_PLATEAU[0] * DIM_PLATEAU[1] * 2
 
-# LEN_B est la liste des tailles des bateaux, déclare aussi les bateaux qu'il y a dans le jeu
-# Sup la liste suivante : [5,4], On aura donc dans le jeu un bateau de taille 5 et
-# et un bateau de taille 4
+# LEN_B est la liste TRIEE des tailles des bateaux, déclare aussi les bateaux qu'il y a dans le jeu
+# Sup la liste suivante : [5,4], On aura donc dans le jeu un bateau de taille 5 et un bateau de taille 4
 LEN_B = [5, 4, 3, 3, 2]
+
+# NB_B est le nombre de bateaux
+NB_B = len(LEN_B)
 
 # Mode Debug :
 # affiche les informations de debug
@@ -50,5 +52,12 @@ TOUCHE_P = TOUCHE_F
 COULE_P = COULE_F
 INFOP_L = [NOINFO_P, RATE_P, TOUCHE_P, COULE_P]
 
+#
 # Vérifications
-assert all(map(lambda x : x>=MIN_LB, LEN_B)) # vérifie que tout les bateaux sont bien >= à la taille min
+#
+
+# vérifie que tout les bateaux sont bien >= à la taille min
+assert all(map(lambda x: x >= MIN_LB, LEN_B))
+
+# Vérifie que la liste des tailles des bateaux est trié
+assert list(sorted(LEN_B, reverse=True)) == LEN_B

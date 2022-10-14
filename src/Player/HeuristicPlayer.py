@@ -1,6 +1,6 @@
 from Game.Engine import Engine
 from Player.RandomPlayer import RandomPlayer
-from utils.constants import COULE_F, END_F, MAX_IT, NOINFO_P, RATE_F, TOUCHE_F
+from utils.constants import END_F, MAX_IT, NOINFO_P, TOUCHE_F
 from utils.types import Pos, PosList
 
 

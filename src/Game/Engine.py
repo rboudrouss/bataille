@@ -1,8 +1,8 @@
 import numpy as np  # type: ignore
-from random import randint
+from random import randint,choice
 import matplotlib.pyplot as plt  # type: ignore
 
-from utils.constants import COULE_F, DIM_PLATEAU, END_F, LEN_B, MAX_IT, RATE_F, TOUCHE_F
+from utils.constants import COULE_F, DIM_PLATEAU, DIR_L, END_F, HOR_D, LEN_B, MAX_IT, MIN_LB, NB_B, RATE_F, TOUCHE_F, VER_D
 from utils.types import Pos, PosList
 from .Bateau import Bateau
 
@@ -32,8 +32,8 @@ class Engine:
         Nous vérifions si la case *pos* est libre et nous vérifions suivont direction les cases suivantes
         """
         # préconditions :
-        assert type <= self.nbB
-        assert 0 <= direction <= 1
+        assert 0 <= type <= self.nbB
+        assert direction in DIR_L
 
         # on récupère la taille
         size: int = self.bateauxL[type-1]
@@ -52,6 +52,9 @@ class Engine:
             0 -> verticale
             1 -> horizontale
         """
+        assert direction in DIR_L
+        assert 0 <= type <= self.nbB
+
         if not self.peut_placer(pos, type, direction):
             print(
                 "Warning: bateau {type} pas placé sur {pos}, ce n'est pas libre")
@@ -70,13 +73,43 @@ class Engine:
 
         self.plateau[pos[0]:pos[0]+size, pos[1]] = type
 
+    def place_posL(self, posL: PosList) -> None:
+        """
+        Place un bateau aux coordonnées PosL
+        """
+        assert len(posL) >= MIN_LB
+        assert posL[0][0] == posL[1][0] or posL[0][1] == posL[1][1]
+
+        length = len(posL)
+
+        try:
+            type = self.bateauxL.index(length)
+        except ValueError:
+            print("Error : no boat of len {} in list self.bateauL {}".format(
+                length, str(self.bateauxL)))
+            exit(1)
+
+        while type <= self.nbB and self.bateauxL[type-1] == length and self.bateaux[type]:
+            type += 1
+
+        if self.bateauxL[type-1] != length or type > self.nbB:
+            print("Warning : Les bateaux de cette taille on déjà été placés ??")
+            type -= 1
+
+        pos = min(map(lambda x: x[0], posL)), min(map(lambda x: x[1], posL))
+        assert pos in posL
+
+        direction = HOR_D if posL[0][1] - posL[1][1] else VER_D
+
+        self.place(pos, type, direction)
+
     def place_alea(self, type: int) -> None:
         """
         Place aléatoirement le bateau de type type
         """
 
         pos = (randint(0, self.dim[0]-1), randint(0, self.dim[1]-1))
-        direction = randint(0, 1)
+        direction = choice(DIR_L)
 
         i: int = 0
 

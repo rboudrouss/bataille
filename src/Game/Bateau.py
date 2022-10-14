@@ -36,16 +36,6 @@ class Bateau:
                     self.poss.append((self.origine[0], self.origine[1]+i))
                 else:
                     self.poss.append((self.origine[0]+i, self.origine[1]))
-        else:
-            assert len(posL) >= MIN_LB
-            assert posL[0][0] == posL[1][0] or posL[0][1] == posL[1][1]
-
-            self.poss = posL.copy()
-            self.length = len(self.poss)
-            self.name = "bateau in " + str_PosL(posL)
-            self.origine = min(map(lambda x: x[0], self.poss)), \
-                min(map(lambda x: x[1], self.poss))
-            self.direction = HOR_D if posL[0][1] - posL[1][1] else VER_D
 
     def touche(self, pos: Pos) -> None:
         assert pos in self.poss
