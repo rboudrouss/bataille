@@ -1,4 +1,6 @@
 from abc import ABC, abstractclassmethod
+from time import sleep
+import matplotlib.pyplot as plt
 import numpy as np
 import numpy.ma as ma
 from json import loads
@@ -169,8 +171,33 @@ class AbstractPlayer(ABC):
 
     def main_loopG(self) -> None:
         """
+        FIXME
         loop principale du jeu avec une interface graphique
         """
+        figure, ax = plt.subplots(figsize=(10, 8))
+
+        #plot1 = ax.imshow(self.game.plateau)
+        plot2 = ax.imshow(self.plateau)
+        plt.title("Player {}".format(self.name), fontsize=20)
+
+        print(self.messages["startP"].format(self.name))
+        i = 0
+        while not self.end:
+            self.play()
+
+            i += 1
+            if i > MAX_IT:
+                print("Error : i : {} > MAXIT {} in Player {}".format(
+                    i, MAX_IT, self.name))
+                exit(1)
+            
+            plot2.set_data(self.plateau)
+
+            figure.canvas.draw()
+            figure.canvas.flush_events()
+            sleep(0.01)
+        print(self.messages['nbWin'].format(self.name, self.nbCoup))
+        plt.show()
 
 
 # TODO fonctions qui retourne les stats du joueur
