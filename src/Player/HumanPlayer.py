@@ -1,6 +1,5 @@
-import numpy as np
-
 from Game.Engine import Engine
+from utils.constants import MAX_IT
 from utils.helpers import convert_posinput, valid_posinput
 from .AbstractPlayer import AbstractPlayer
 
@@ -8,28 +7,29 @@ from .AbstractPlayer import AbstractPlayer
 class HumanPlayer(AbstractPlayer):
     def __init__(self, game: Engine) -> None:
         super().__init__(game)
+        self.name = "human"
+        print(self.messages["start"].format(str(self.dim)))
 
     def play(self) -> None:
+        print(self.messages["showState"])
+        self.show_info()
+        self.show_game_info()
+
         if self.end:
             print(self.messages["playFinished"])
             return
 
         inp: str = ""
-        while not valid_posinput(inp):
+        i: int = 0
+        while not valid_posinput(inp) and i < MAX_IT:
             inp = input(self.messages["askInput"])
+
+        if i >= MAX_IT:
+            print(
+                "Error : User took too many retries ({}) to give a valid input".format(i)
+            )
+            exit(1)
 
         x, y = convert_posinput(inp)
 
-        self.handle_feedback(*self.interact((y, x)), (x, y))
-
-
-    def main_loop(self):
-        """
-        loop princiaple du jeu
-        """
-        print(self.messages["start"].format(str(self.dim)))
-        while not self.end:
-            print(self.messages["showState"])
-            self.show_info()
-            self.show_game_info()
-            self.play()
+        self.interact_n_handle((y, x))

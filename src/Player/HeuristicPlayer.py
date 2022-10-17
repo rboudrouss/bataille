@@ -8,6 +8,7 @@ class HeuristicPlayer(RandomPlayer):
     def __init__(self, game: Engine) -> None:
         super().__init__(game)
 
+        self.name = "heuristic"
         self.huntMode = False
         self.lastfeedback = 10  # dumb feedback, no existing
         self.queueCoups: PosList = []

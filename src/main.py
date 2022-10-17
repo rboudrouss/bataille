@@ -12,7 +12,6 @@ from Game.Engine import Engine
 from Player.HeuristicPlayer import HeuristicPlayer
 from Player.HumanPlayer import HumanPlayer
 from Player.RandomPlayer import RandomPlayer
-from utils.comb import nb_placer
 
 if __name__ == "__main__":
     game = Engine()

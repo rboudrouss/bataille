@@ -3,8 +3,7 @@ import numpy as np
 from json import loads
 
 from Game.Engine import Engine
-from utils.constants import COULE_F, COULE_P, DEBUG, END_F\
-    , FEEDBACK_L, INFOP_L, NOINFO_P, RATE_F, RATE_P, TOUCHE_F, TOUCHE_P
+from utils.constants import COULE_F, COULE_P, DEBUG, END_F, FEEDBACK_L, INFOP_L, MAX_IT, NOINFO_P, RATE_F, RATE_P, TOUCHE_F, TOUCHE_P
 from utils.types import Pos, PosList, MessDict
 from utils.helpers import orderl, str_PosL
 
@@ -23,6 +22,7 @@ class InfoP(np.ndarray):
         assert value in INFOP_L
         return super().__setitem__(key, value)
 
+
 class AbstractPlayer(ABC):
     """
     Object abstrait auquel tout les joeurs devrons hérité pour être considéré comme fonctionnel
@@ -30,7 +30,6 @@ class AbstractPlayer(ABC):
     Ici se passe toutes les intéractions avec le gameEngine et 
     se rappelle des résultats des anciens coups
     """
-
 
     def __init__(self, game: Engine) -> None:
         """
@@ -52,6 +51,7 @@ class AbstractPlayer(ABC):
         self.plateau = InfoP(self.dim)
         self.end: bool = False
         self.nbCoup = 0
+        self.name = "abstract"
 
         with open("data/messages.json", 'r') as f:
             self.messages: MessDict = loads(f.read())
@@ -67,10 +67,12 @@ class AbstractPlayer(ABC):
         assert feedback in FEEDBACK_L
         assert posL if feedback == COULE_F else True
 
-        return feedback,posL
+        return feedback, posL
 
     def handle_feedback(self, feedback: int, posL: PosList | None, pos: Pos) -> None:
         """
+        FIXME pos en x,y <!>
+
         affiche ce qu'il faut afficher à l'utilisateur selon le feedback de son actioe
         et modifie la liste des informations donné par le jeu & la variable self.end
         """
@@ -110,17 +112,14 @@ class AbstractPlayer(ABC):
 
     def interact_n_handle(self, pos: Pos) -> tuple[int, PosList | None]:
         """
-        FIXME might be buggy, gotta check pos x,y y,x ?
-        INFO not used rn, probably would, would make code less messy
-        cause rn if u use juste self.inreact, it won't update self.end
-        which depends on RandomPlayer and all
-
         interact and handle feedbake
         litteraly just excecute both self.interact & self.handle_feedback
         and returns the feedback
+
+        pos en y,x
         """
         r = self.interact(pos)
-        self.handle_feedback(*r, pos)
+        self.handle_feedback(*r, (pos[1], pos[0]))
         return r
 
     def show_game_info(self) -> None:
@@ -138,17 +137,23 @@ class AbstractPlayer(ABC):
         print(self.plateau)
 
     @abstractclassmethod
-    def play(self, pos: Pos) -> tuple[int, PosList | None]:
+    def play(self, pos: Pos) -> None:
         # TODO maybe centralize play and make max int verification in this mainloop ?
         raise NotImplementedError
 
-    @abstractclassmethod
     def main_loop(self) -> None:
         """
         loop principale du jeu
         """
-        # while not self.end:
-        #    self.play()
-        raise NotImplementedError
-    
+        i = 0
+        while not self.end:
+            # self.show_game_info()
+            self.play()
+            i += 1
+            if i > MAX_IT:
+                print("Error : i : {} > MAXIT {} in Player {}".format(
+                    i, MAX_IT, self.name))
+                exit(1)
+        print(self.messages['NbWin'].format(self.name, self.nbCoup))
+
 # TODO fonctions qui retourne les stats du joueur
