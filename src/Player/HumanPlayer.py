@@ -26,7 +26,8 @@ class HumanPlayer(AbstractPlayer):
 
         if i >= MAX_IT:
             print(
-                "Error : User took too many retries ({}) to give a valid input".format(i)
+                "Error : User took too many retries ({}) to give a valid input".format(
+                    i)
             )
             exit(1)
 

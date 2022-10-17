@@ -12,7 +12,6 @@ class Engine:
     def __init__(self, dim : Pos = DIM_PLATEAU, bateauxL:list[int] = LEN_B):
         self.plateau = np.zeros(dim, dtype=int)
         self.bateauxL = bateauxL
-        self.nbB: int = len(self.bateauxL)
 
         self.bateaux: list[Bateau | None] = [None]*self.nbB
         self.coules: list[bool] = [False]*self.nbB
@@ -21,6 +20,10 @@ class Engine:
     @property
     def dim(self) -> Pos:
         return self.plateau.shape
+    
+    @property
+    def nbB(self)->int:
+        return len(self.bateauxL)
 
     def peut_placer(self, pos: Pos, type: int, direction: int) -> bool:
         """

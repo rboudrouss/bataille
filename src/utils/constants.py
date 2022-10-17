@@ -30,6 +30,11 @@ DEBUG = True
 # mais plus cela prendra du temps
 GEN_MC = 10
 
+
+# MAX_GEN est le nombre de tentative MAXIMAL de génération aléatoire d'un plateau pour l'algorithme
+# de montecarlo
+MAX_GEN = MAX_IT*10
+
 #
 #
 # Config & convention dev

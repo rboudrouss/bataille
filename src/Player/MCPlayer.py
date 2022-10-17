@@ -4,7 +4,7 @@ from random import randrange
 
 from Game import Engine
 from Game.EngineStats import EngineStats
-from utils.constants import COULE_F, GEN_MC, MAX_IT
+from utils.constants import COULE_F, GEN_MC, MAX_GEN, MAX_IT
 from utils.types import Pos, PosList
 from .AbstractPlayer import AbstractPlayer
 
@@ -28,17 +28,7 @@ class MCPlayer(AbstractPlayer):
         )
 
         for j in range(self.nbGen):
-            i = 0
-            self.local_game.fill_random()
-            while not self.local_game.verify_from_mask(self.plateau) and i < (MAX_IT*10):
-                self.local_game.set_plateau(self.bateauCPosL)
-                self.local_game.fill_random()
-                i += 1
-
-            if i >= MAX_IT*10:
-                print(
-                    "Warning : could not generate a valid plateau avec {} attempts. attempt n°{}".format(i, j))
-                continue
+            self.generate_plateau(j)
 
             temp = self.local_game.get_plateau()
             temp[temp > 1] = 1
@@ -62,3 +52,16 @@ class MCPlayer(AbstractPlayer):
         if feedback == COULE_F:
             assert posL
             self.bateauCPosL.append(posL)
+
+    def generate_plateau(self, num: int) -> None:
+        i = 0
+        self.local_game.set_plateau(self.bateauCPosL)
+        self.local_game.fill_random()
+        while not self.local_game.verify_from_mask(self.plateau) and i < MAX_GEN:
+            self.local_game.set_plateau(self.bateauCPosL)
+            self.local_game.fill_random()
+            i += 1
+
+        if i >= MAX_GEN:
+            print(
+                "Warning : could not generate a valid plateau avec {} attempts. attempt n°{}".format(i, num))

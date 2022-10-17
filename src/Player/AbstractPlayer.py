@@ -167,4 +167,10 @@ class AbstractPlayer(ABC):
                 exit(1)
         print(self.messages['nbWin'].format(self.name, self.nbCoup))
 
+    def main_loopG(self) -> None:
+        """
+        loop principale du jeu avec une interface graphique
+        """
+
+
 # TODO fonctions qui retourne les stats du joueur
