@@ -44,7 +44,7 @@ class HeuristicPlayer(RandomPlayer):
         """
         for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             if 0 <= pos[0]+dy < self.dim[0] and 0 <= pos[1]+dx < self.dim[1] and \
-                    self.plateau[pos[0]+dy, pos[1]+dx] == NOINFO_P:
+                    self.plateau[pos[0]+dy, pos[1]+dx].mask.all():
                 self.queueCoups.append((pos[0]+dy, pos[1]+dx))
 
     def play_random(self) -> None:
@@ -70,8 +70,8 @@ class HeuristicPlayer(RandomPlayer):
                 self.play_hunt()
             else:
                 self.play_random()
-            i+=1
+            i += 1
             if i > MAX_IT:
-                print("Error : i : {} > MAXIT {}".format(i,MAX_IT))
+                print("Error : i : {} > MAXIT {}".format(i, MAX_IT))
                 exit(1)
         print("le joueur heuristique a trouvé après {} coups".format(self.nbCoup))

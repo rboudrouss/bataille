@@ -1,5 +1,6 @@
 from abc import ABC, abstractclassmethod
 import numpy as np
+import numpy.ma as ma
 from json import loads
 
 from Game.Engine import Engine
@@ -8,14 +9,16 @@ from utils.types import Pos, PosList, MessDict
 from utils.helpers import orderl, str_PosL
 
 
-class InfoP(np.ndarray):
+class InfoP(ma.MaskedArray):
     """
     initialise une liste numpy selon les dimensions données mais
     ne peux accépter que les valeurs qui sont dans la liste INFOP_L
     """
     def __new__(cls, dim: Pos):
-        zero = np.full(dim, NOINFO_P, dtype=int)
-        obj = np.asarray(zero).view(cls)
+        data = np.full(dim, NOINFO_P, dtype=int)
+        mask = ma.array(data, mask=True, fill_value=NOINFO_P)
+        
+        obj = ma.asarray(mask).view(cls)
         return obj
 
     def __setitem__(self, key, value):

@@ -1,4 +1,5 @@
 import numpy as np
+import numpy.ma as ma
 
 from utils.types import PosList
 from .Engine import Engine
@@ -32,13 +33,9 @@ class EngineStats(Engine):
         for type in typeL:
             self.place_alea(type)
     
-    def verify_constraints(self, bateauCposL, touchCases, rateCases) -> bool:
-        for posL in bateauCposL:
-            for y,x in posL:
-                if self.plateau[y,x] == 0:
-                    return False
-
-        for y,x in touchCases:
-            if self.plateau:
-                pass
-
+    def verify_from_mask(self, mask:ma.MaskedArray) -> bool:
+        plateau_temp = self.plateau.copy()
+        mask_temp = mask.copy()
+        plateau_temp[plateau_temp > 1] = 1
+        mask_temp[mask_temp > 1] = 1
+        return  (mask_temp == plateau_temp).all()
