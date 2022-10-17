@@ -9,6 +9,11 @@ from .AbstractPlayer import AbstractPlayer
 
 class RandomPlayer(AbstractPlayer):
     def __init__(self, game: Engine) -> None:
+        """
+        TODO use self.plateau istead of self.available
+        + find a way to not use self.lastCoup & self.lastfeedback
+        like self.play returning the feedback ?
+        """
         super().__init__(game)
         self.name = "random"
         self.available = {(y, x) for y in range(self.dim[0])

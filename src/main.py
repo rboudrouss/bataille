@@ -9,17 +9,17 @@ les bateaux sont :
 """
 
 from Game.Engine import Engine
+from Player.AbstractPlayer import AbstractPlayer
 from Player.HeuristicPlayer import HeuristicPlayer
 from Player.HumanPlayer import HumanPlayer
+from Player.MCPlayer import MCPlayer
 from Player.RandomPlayer import RandomPlayer
 
 if __name__ == "__main__":
     game = Engine()
     game.genere_grille()
 
-    assert game.isPlayable()
-
-    player = RandomPlayer(game)
+    player :AbstractPlayer = RandomPlayer(game)
     player.main_loop()
 
     print("-"*60)
@@ -27,8 +27,15 @@ if __name__ == "__main__":
     game.reset()
     game.genere_grille()
 
-    assert game.isPlayable()
     player = HeuristicPlayer(game)
+    player.main_loop()
+
+    print("-"*60)
+
+    game.reset()
+    game.genere_grille()
+
+    player = MCPlayer(game)
     player.main_loop()
 
     print("-"*60)

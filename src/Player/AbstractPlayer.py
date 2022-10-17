@@ -17,7 +17,7 @@ class InfoP(ma.MaskedArray):
     def __new__(cls, dim: Pos):
         data = np.full(dim, NOINFO_P, dtype=int)
         mask = ma.array(data, mask=True, fill_value=NOINFO_P)
-        
+
         obj = ma.asarray(mask).view(cls)
         return obj
 
@@ -64,6 +64,9 @@ class AbstractPlayer(ABC):
         retourne 0 si raté, 1 si touché, 2 si coulé et -1 si le jeu est terminé
         si coulé retourne aussi les positions du bateau
         """
+        if not self.plateau.mask[pos[0], pos[1]]:
+            print("Warning, playing a case already played")
+
         self.nbCoup += 1
         feedback, posL = self.game.joue(pos)
 
@@ -91,22 +94,26 @@ class AbstractPlayer(ABC):
             else:
                 assert posL
                 self.end = True
-                print(self.messages["couleCase"].format(str_PosL(posL)))
+                print(self.messages["couleCase"].format(
+                    str(self.nbCoup).zfill(2), str_PosL(posL)))
                 print(self.messages["win"])
 
         elif feedback == RATE_F:
-            print(self.messages["rate"].format(str((x, y))))
+            print(self.messages["rate"].format(
+                str(self.nbCoup).zfill(2), str((x, y))))
             self.plateau[y, x] = RATE_P
 
         elif feedback == TOUCHE_F:
-            print(self.messages["touche"].format(str((x, y))))
+            print(self.messages["touche"].format(
+                str(self.nbCoup).zfill(2), str((x, y))))
             self.plateau[y, x] = TOUCHE_P
 
         elif feedback == COULE_F:
             if posL is None:
                 print("Error: posL is None ??")
                 exit()
-            print(self.messages["couleCase"].format(str_PosL(posL)))
+            print(self.messages["couleCase"].format(
+                str(self.nbCoup).zfill(2), str_PosL(posL)))
 
             xmin, xmax = orderl(posL[0][1], posL[-1][1])
             ymin, ymax = orderl(posL[0][0], posL[-1][0])
@@ -148,6 +155,7 @@ class AbstractPlayer(ABC):
         """
         loop principale du jeu
         """
+        print(self.messages["startP"].format(self.name))
         i = 0
         while not self.end:
             # self.show_game_info()
@@ -157,6 +165,6 @@ class AbstractPlayer(ABC):
                 print("Error : i : {} > MAXIT {} in Player {}".format(
                     i, MAX_IT, self.name))
                 exit(1)
-        print(self.messages['NbWin'].format(self.name, self.nbCoup))
+        print(self.messages['nbWin'].format(self.name, self.nbCoup))
 
 # TODO fonctions qui retourne les stats du joueur

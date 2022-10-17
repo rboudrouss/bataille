@@ -13,6 +13,7 @@ MessDict = TypedDict(
         "playFinished": str,
         "start": str,
         "showState": str,
-        "NbWin": str
+        "nbWin": str,
+        "startP": str
     }
 )

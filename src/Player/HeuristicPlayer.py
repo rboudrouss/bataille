@@ -44,7 +44,7 @@ class HeuristicPlayer(RandomPlayer):
         """
         for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             if 0 <= pos[0]+dy < self.dim[0] and 0 <= pos[1]+dx < self.dim[1] and \
-                    self.plateau[pos[0]+dy, pos[1]+dx].mask.all():
+                    self.plateau.mask[pos[0]+dy, pos[1]+dx]:
                 self.queueCoups.append((pos[0]+dy, pos[1]+dx))
 
     def play_random(self) -> None:

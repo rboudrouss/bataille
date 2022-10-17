@@ -28,12 +28,14 @@ class EngineStats(Engine):
         """
         Place les bateaux non placés aléatoirement
         """
-        typeL = [i for i in range(self.nbB) if not self.bateaux[i]]
+        typeL = [i+1 for i in range(self.nbB) if not self.bateaux[i]]
 
         for type in typeL:
             self.place_alea(type)
     
     def verify_from_mask(self, mask:ma.MaskedArray) -> bool:
+        if mask.mask.all():
+            return True
         plateau_temp = self.plateau.copy()
         mask_temp = mask.copy()
         plateau_temp[plateau_temp > 1] = 1

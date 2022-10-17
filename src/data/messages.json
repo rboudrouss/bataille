@@ -1,11 +1,12 @@
 {
     "win": "Vous avez gagné \\o/, le jeu est terminé",
-    "couleCase": "Coulé : les cases du bateau coulé sont : {}",
-    "touche": "Touché ! la case touché est {}",
+    "couleCase": "{} Coulé : les cases du bateau coulé sont : {}",
+    "touche": "{} Touché ! la case touché est {}",
+    "rate": "{} Raté ! La case est {}",
     "playFinished": "Le jeu est terminé, veuillez reinitialiser le jeu pour jouer à nouveau",
     "askInput": "Veuillez entrez les coordonnées sous la forme \"x,y\" : ",
-    "rate": "Raté ! La case est {}",
     "start": "Le jeu commence \\o/, le tableau est de dimmension {}.",
     "showState": "Voici l'état du plateau : ",
-    "NbWin": "Le joueur {} y est arrivé en {} coups !"
+    "nbWin": "Le joueur {} y est arrivé en {} coups !",
+    "startP": "Le joueur {} commence o/"
 }

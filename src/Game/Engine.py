@@ -58,11 +58,12 @@ class Engine:
 
         if not self.peut_placer(pos, type, direction):
             print(
-                "Warning: bateau {type} pas placé sur {pos}, ce n'est pas libre")
+                f"Warning: bateau {type} pas placé sur {pos}, ce n'est pas libre")
             return
         # sinon bateau déjà placé c'est bizarre
         if self.bateaux[type-1]:
             print("Warning : bateau déjà placé (?)")
+            exit(1)
 
         size: int = self.bateauxL[type-1]
         self.bateaux[type-1] = Bateau(length=size,
@@ -85,13 +86,13 @@ class Engine:
 
         # assert that batteau of this length exists
         try:
-            type = self.bateauxL.index(length)
+            type = self.bateauxL.index(length) + 1
         except ValueError:
             print("Error : no boat of len {} in list self.bateauL {}".format(
                 length, str(self.bateauxL)))
             exit(1)
 
-        while type <= self.nbB and self.bateauxL[type-1] == length and self.bateaux[type]:
+        while type <= self.nbB and self.bateauxL[type-1] == length and self.bateaux[type-1]:
             type += 1
 
         if self.bateauxL[type-1] != length or type > self.nbB:
@@ -143,6 +144,8 @@ class Engine:
         """
         for type in range(1, self.nbB+1):
             self.place_alea(type)
+        
+        assert self.isPlayable()
 
     def reset(self) -> None:
         """
