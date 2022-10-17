@@ -1,16 +1,17 @@
 import numpy as np  # type: ignore
-from random import randint,choice
+from random import randint, choice
 import matplotlib.pyplot as plt  # type: ignore
 
-from utils.constants import COULE_F, DIM_PLATEAU, DIR_L, END_F, HOR_D, LEN_B, MAX_IT, MIN_LB, NB_B, RATE_F, TOUCHE_F, VER_D
+from utils.constants import COULE_F, DIM_PLATEAU, DIR_L, END_F, HOR_D, LEN_B, MAX_IT,\
+    MIN_LB, RATE_F, TOUCHE_F, VER_D
 from utils.types import Pos, PosList
 from .Bateau import Bateau
 
 
 class Engine:
-    def __init__(self):
-        self.plateau = np.zeros(DIM_PLATEAU, dtype=int)
-        self.bateauxL = LEN_B
+    def __init__(self, dim : Pos = DIM_PLATEAU, bateauxL:list[int] = LEN_B):
+        self.plateau = np.zeros(dim, dtype=int)
+        self.bateauxL = bateauxL
         self.nbB: int = len(self.bateauxL)
 
         self.bateaux: list[Bateau | None] = [None]*self.nbB
@@ -82,6 +83,7 @@ class Engine:
 
         length = len(posL)
 
+        # assert that batteau of this length exists
         try:
             type = self.bateauxL.index(length)
         except ValueError:
@@ -93,8 +95,9 @@ class Engine:
             type += 1
 
         if self.bateauxL[type-1] != length or type > self.nbB:
-            print("Warning : Les bateaux de cette taille on déjà été placés ??")
             type -= 1
+            print("Warning : Les bateaux de la taille {} (type : {}) ont déjà été placés ??".format(
+                length, type))
 
         pos = min(map(lambda x: x[0], posL)), min(map(lambda x: x[1], posL))
         assert pos in posL

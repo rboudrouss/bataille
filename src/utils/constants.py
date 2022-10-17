@@ -25,6 +25,11 @@ NB_B = len(LEN_B)
 # par exemple affiche le plateau enemie en mode HumanPlayer
 DEBUG = True
 
+# GEN_MC est le nombre de génération de plateau avant de prendre une décision pour l'algorithme
+# MonteCarlo. Plus le nombre est grand plus l'agorithme sera précis (jusqu'à un certain point)
+# mais plus cela prendra du temps
+GEN_MC = 20
+
 #
 #
 # Config & convention dev
