@@ -60,15 +60,15 @@ class AbstractPlayer(ABC):
         self.nbCoup = 0
         with open(MSG_FILE, 'r') as f:
             self.messages: MessDict = loads(f.read())
-    
+
     @abstractproperty
     def name(self):
         return "abstract"
-    
+
     def get_bateaux(self):
         return [i for i in self.game.bateauxL]
-        
-    def reset(self, game : Engine | None = None)->None:
+
+    def reset(self, game: Engine | None = None) -> None:
         """
         réinitialise le joeur, si le jeu n'est pas donné, il est aléatoire
         """
@@ -210,7 +210,7 @@ class AbstractPlayer(ABC):
                 logging.error("Error : i : {} > MAXIT {} in Player {}".format(
                     i, MAX_IT, self.name))
                 exit(1)
-            
+
             plot2.set_data(self.plateau)
 
             figure.canvas.draw()

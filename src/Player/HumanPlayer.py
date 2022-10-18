@@ -9,7 +9,7 @@ class HumanPlayer(AbstractPlayer):
     def __init__(self, game: Engine) -> None:
         super().__init__(game)
         print(self.messages["start"].format(str(self.dim)))
-    
+
     @property
     def name(self):
         return "human"

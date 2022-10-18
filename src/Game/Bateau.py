@@ -30,7 +30,7 @@ class Bateau:
             self.origine = pos
             self.name = name if name else str(length) + " " + str(pos)
 
-            self.poss: PosList = self.generate_posL(pos,length,direction)
+            self.poss: PosList = self.generate_posL(pos, length, direction)
 
     def touche(self, pos: Pos) -> None:
         assert pos in self.poss
@@ -44,9 +44,9 @@ class Bateau:
         if self.est_coule():
             return self.poss
         return None
-    
+
     @staticmethod
-    def generate_posL(pos:Pos, length:int, direction:int) -> PosList:
+    def generate_posL(pos: Pos, length: int, direction: int) -> PosList:
         posl: PosList = []
         for i in range(length):
             if direction:

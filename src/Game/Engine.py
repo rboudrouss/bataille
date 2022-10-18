@@ -56,10 +56,12 @@ class Engine:
 
         if direction:
             return pos[1] + length <= plateau.shape[1] and \
-                all(i in empty_valueL for i in plateau[pos[0], pos[1]:pos[1]+length])
+                all(i in empty_valueL for i in plateau[pos[0],
+                    pos[1]:pos[1]+length])
 
         return pos[0] + length <= plateau.shape[0] and \
-            all(i in empty_valueL for i in plateau[pos[0]:pos[0]+length, pos[1]])
+            all(i in empty_valueL for i in plateau[pos[0]
+                :pos[0]+length, pos[1]])
 
     def place(self, pos: Pos, type: int, direction: int) -> None:
         """
@@ -183,7 +185,8 @@ class Engine:
         si coulé retourne aussi les positions du bateau
         """
         if self.end:
-            logging.warning("Warning: le jeu est terminé, mais ça joue encore ?")
+            logging.warning(
+                "Warning: le jeu est terminé, mais ça joue encore ?")
             return END_F, None
         y, x = pos
         type: int = self.plateau[y, x]
@@ -191,7 +194,8 @@ class Engine:
             return RATE_F, None
 
         if self.bateaux[type-1] is None:
-            logging.critical("Error : self.bateaux{} is None <!>".format(type-1))
+            logging.critical(
+                "Error : self.bateaux{} is None <!>".format(type-1))
             exit()
 
         bateau: Bateau = self.bateaux[type-1]  # type: ignore

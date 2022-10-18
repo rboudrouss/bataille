@@ -10,18 +10,13 @@ les bateaux sont :
 
 import logging
 from Game.Engine import Engine
-from Player.AbstractPlayer import AbstractPlayer
-from Player.HeuristicPlayer import HeuristicPlayer
-from Player.HumanPlayer import HumanPlayer
-from Player.MCPlayer import MCPlayer
-from Player.ProbPlayer import ProbPlayer
-from Player.RandomPlayer import RandomPlayer
+from Player import AbstractPlayer, HeuristicPlayer, HumanPlayer, MCPlayer, ProbPlayer, RandomPlayer
 
 if __name__ == "__main__":
     game = Engine()
     game.genere_grille()
 
-    player :AbstractPlayer = RandomPlayer(game)
+    player: AbstractPlayer = RandomPlayer(game)
     player.main_loop()
 
     logging.info("-"*60)

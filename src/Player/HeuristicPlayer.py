@@ -15,14 +15,14 @@ class HeuristicPlayer(RandomPlayer):
     @property
     def name(self):
         return "heuristic"
-    
-    def reset(self, game:Engine|None=None)->None:
+
+    def reset(self, game: Engine | None = None) -> None:
         super().reset()
         self.available = {(y, x) for y in range(self.dim[0])
                           for x in range(self.dim[1])}
-        self.lastCoup = (0,0)
-    
-    def reset(self, game:Engine | None = None) -> None:
+        self.lastCoup = (0, 0)
+
+    def reset(self, game: Engine | None = None) -> None:
         super().reset(game)
         self.huntMode = False
         self.queueCoups = []

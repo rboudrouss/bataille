@@ -17,12 +17,12 @@ class MCPlayer(AbstractPlayer):
         self.bateauCPosL: list[PosList] = []
         self.nbGen = nbGen
         self.maxGen = maxGen
-    
+
     @property
     def name(self):
         return "monte carlo"
-    
-    def reset(self, game:Engine|None=None, nbGen = GEN_MC, maxGen = MAX_GEN)->None:
+
+    def reset(self, game: Engine | None = None, nbGen=GEN_MC, maxGen=MAX_GEN) -> None:
         super().reset()
         self.local_game.reset()
         self.bateauCPosL = []
@@ -47,7 +47,8 @@ class MCPlayer(AbstractPlayer):
 
             self.local_game.set_plateau(self.bateauCPosL)
 
-        logging.debug(f"Info : Playing with {nbSuc}/{self.nbGen} successful generations")
+        logging.debug(
+            f"Info : Playing with {nbSuc}/{self.nbGen} successful generations")
         if (temp_p == 0).all():
             logging.warning(
                 "Warning : Toutes les générations étaient des echecs, on joue une case aléatoire")
