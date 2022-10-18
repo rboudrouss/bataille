@@ -36,8 +36,8 @@ if __name__ == "__main__":
     game.reset()
     game.genere_grille()
 
-    # player = ProbPlayer(game)
-    # player.main_loop()
+    player = ProbPlayer(game)
+    player.main_loop()
 
     print("-"*60)
 

@@ -1,4 +1,4 @@
-from abc import ABC, abstractclassmethod
+from abc import ABC, abstractclassmethod, abstractproperty
 from time import sleep
 import matplotlib.pyplot as plt
 import numpy as np
@@ -6,7 +6,8 @@ import numpy.ma as ma
 from json import loads
 
 from Game.Engine import Engine
-from utils.constants import COULE_F, COULE_P, DEBUG, END_F, FEEDBACK_L, INFOP_L, MAX_IT, NOINFO_P, RATE_F, RATE_P, TOUCHE_F, TOUCHE_P
+from utils.constants import COULE_F, COULE_P, DEBUG, END_F, FEEDBACK_L, INFOP_L,\
+    MAX_IT, MSG_FILE, NOINFO_P, RATE_F, RATE_P, TOUCHE_F, TOUCHE_P
 from utils.types import Pos, PosList, MessDict
 from utils.helpers import orderl, str_PosL
 
@@ -56,10 +57,29 @@ class AbstractPlayer(ABC):
         self.plateau = InfoP(self.dim)
         self.end: bool = False
         self.nbCoup = 0
-        self.name = "abstract"
-
-        with open("data/messages.json", 'r') as f:
+        with open(MSG_FILE, 'r') as f:
             self.messages: MessDict = loads(f.read())
+    
+    @abstractproperty
+    def name(self):
+        return "abstract"
+    
+    def get_bateaux(self):
+        return self.game.bateauxL
+        
+    def reset(self, game : Engine | None = None)->None:
+        """
+        réinitialise le joeur, si le jeu n'est pas donné, il est aléatoire
+        """
+        if game:
+            self.game = game
+        else:
+            self.game.reset()
+            self.game.genere_grille()
+
+        self.plateau = InfoP(self.dim)
+        self.end = False
+        self.nbCoup = 0
 
     def interact(self, pos: Pos) -> tuple[int, PosList | None]:
         """

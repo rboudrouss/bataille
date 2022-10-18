@@ -7,8 +7,11 @@ from .AbstractPlayer import AbstractPlayer
 class HumanPlayer(AbstractPlayer):
     def __init__(self, game: Engine) -> None:
         super().__init__(game)
-        self.name = "human"
         print(self.messages["start"].format(str(self.dim)))
+    
+    @property
+    def name(self):
+        return "human"
 
     def play(self) -> None:
         print(self.messages["showState"])

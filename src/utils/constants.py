@@ -1,3 +1,5 @@
+from pathlib import Path
+
 #
 #
 # Config général du jeu :
@@ -41,6 +43,24 @@ MAX_GEN = MAX_IT*10
 # **<!> ne pas toucher sauf si vous savez ce que vous faite <!>**
 #
 #
+
+#
+# PATHS
+#
+
+SRC_DIR = Path(__file__).resolve().parent.parent
+
+DATA_DIR = SRC_DIR/"data"
+
+MSG_FILE = DATA_DIR/"messages.json"
+
+
+#
+# Convention Dev
+#
+
+# EMPTY_G est la valeur dans Engine de la case quand elle est vide
+EMPTY_G = 0
 
 # direction du bateau 0 si vertical, 1 si horizontal
 VER_D = 0

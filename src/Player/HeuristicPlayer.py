@@ -8,10 +8,23 @@ class HeuristicPlayer(RandomPlayer):
     def __init__(self, game: Engine) -> None:
         super().__init__(game)
 
-        self.name = "heuristic"
         self.huntMode = False
-        self.lastfeedback = 10  # dumb feedback, no existing
         self.queueCoups: PosList = []
+
+    @property
+    def name(self):
+        return "heuristic"
+    
+    def reset(self, game:Engine|None=None)->None:
+        super().reset()
+        self.available = {(y, x) for y in range(self.dim[0])
+                          for x in range(self.dim[1])}
+        self.lastCoup = (0,0)
+    
+    def reset(self, game:Engine | None = None) -> None:
+        super().reset(game)
+        self.huntMode = False
+        self.queueCoups = []
 
     def play_hunt(self) -> None:
         """

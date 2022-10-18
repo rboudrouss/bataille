@@ -15,11 +15,21 @@ class RandomPlayer(AbstractPlayer):
         like self.play returning the feedback ?
         """
         super().__init__(game)
-        self.name = "random"
         self.available = {(y, x) for y in range(self.dim[0])
                           for x in range(self.dim[1])}
         self.lastCoup = (0, 0)
-        self.lastfeedback = 0
+        self.lastfeedback = 10
+    
+    @property
+    def name(self):
+        return "random"
+    
+    def reset(self, game:Engine|None=None)->None:
+        super().reset()
+        self.available = {(y, x) for y in range(self.dim[0])
+                          for x in range(self.dim[1])}
+        self.lastCoup = (0,0)
+        self.lastfeedback = 10
 
     def play(self) -> None:
         y, x = choice(list(self.available))

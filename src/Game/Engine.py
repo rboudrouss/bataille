@@ -2,15 +2,15 @@ import numpy as np  # type: ignore
 from random import randint, choice
 import matplotlib.pyplot as plt  # type: ignore
 
-from utils.constants import COULE_F, DIM_PLATEAU, DIR_L, END_F, HOR_D, LEN_B, MAX_IT,\
+from utils.constants import COULE_F, DIM_PLATEAU, DIR_L, EMPTY_G, END_F, HOR_D, LEN_B, MAX_IT,\
     MIN_LB, RATE_F, TOUCHE_F, VER_D
 from utils.types import Pos, PosList
 from .Bateau import Bateau
 
 
 class Engine:
-    def __init__(self, dim : Pos = DIM_PLATEAU, bateauxL:list[int] = LEN_B):
-        self.plateau = np.zeros(dim, dtype=int)
+    def __init__(self, dim: Pos = DIM_PLATEAU, bateauxL: list[int] = LEN_B):
+        self.plateau = np.full(dim, fill_value=EMPTY_G, dtype=int)
         self.bateauxL = bateauxL
 
         self.bateaux: list[Bateau | None] = [None]*self.nbB
@@ -20,9 +20,9 @@ class Engine:
     @property
     def dim(self) -> Pos:
         return self.plateau.shape
-    
+
     @property
-    def nbB(self)->int:
+    def nbB(self) -> int:
         return len(self.bateauxL)
 
     def peut_placer(self, pos: Pos, type: int, direction: int) -> bool:
@@ -42,10 +42,23 @@ class Engine:
         # on récupère la taille
         size: int = self.bateauxL[type-1]
 
-        if direction:
-            return pos[1] + size <= self.dim[1] and all(self.plateau[pos[0], pos[1]:pos[1]+size] == 0)
+        return self.est_disponible(self.plateau, pos, size, direction)
 
-        return pos[0] + size <= self.dim[0] and all(self.plateau[pos[0]:pos[0]+size, pos[1]] == 0)
+    @staticmethod
+    def est_disponible(plateau: np.ndarray, pos: Pos, length: int, direction: int, empty_valueL: list[int] = [EMPTY_G]) -> bool:
+        """
+        vérifie si la place que prendra un bateau dans le plateau est disponible
+        """
+        # HACK find a better way using numpy
+        assert direction in DIR_L
+        assert length >= MIN_LB
+
+        if direction:
+            return pos[1] + length <= plateau.shape[1] and \
+                all(i in empty_valueL for i in plateau[pos[0], pos[1]:pos[1]+length])
+
+        return pos[0] + length <= plateau.shape[0] and \
+            all(i in empty_valueL for i in plateau[pos[0]:pos[0]+length, pos[1]])
 
     def place(self, pos: Pos, type: int, direction: int) -> None:
         """
@@ -147,7 +160,7 @@ class Engine:
         """
         for type in range(1, self.nbB+1):
             self.place_alea(type)
-        
+
         assert self.isPlayable()
 
     def reset(self) -> None:
