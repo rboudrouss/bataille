@@ -8,6 +8,7 @@ les bateaux sont :
 5 : un torpilleur (2 cases)
 """
 
+import logging
 from Game.Engine import Engine
 from Player.AbstractPlayer import AbstractPlayer
 from Player.HeuristicPlayer import HeuristicPlayer
@@ -23,7 +24,7 @@ if __name__ == "__main__":
     player :AbstractPlayer = RandomPlayer(game)
     player.main_loop()
 
-    print("-"*60)
+    logging.info("-"*60)
 
     game.reset()
     game.genere_grille()
@@ -31,7 +32,7 @@ if __name__ == "__main__":
     player = HeuristicPlayer(game)
     player.main_loop()
 
-    print("-"*60)
+    logging.info("-"*60)
 
     game.reset()
     game.genere_grille()
@@ -39,15 +40,15 @@ if __name__ == "__main__":
     player = ProbPlayer(game)
     player.main_loop()
 
-    print("-"*60)
+    logging.info("-"*60)
 
     game.reset()
     game.genere_grille()
 
     player = MCPlayer(game)
-    # player.main_loop()
+    player.main_loop()
 
-    print("-"*60)
+    logging.info("-"*60)
 
     if input("Voulez vous jouer au jeu vous même ? y/[n] ").strip().capitalize().startswith("Y"):
         game.reset()

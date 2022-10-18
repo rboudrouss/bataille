@@ -1,3 +1,4 @@
+import logging
 import numpy as np  # type: ignore
 from random import randint, choice
 import matplotlib.pyplot as plt  # type: ignore
@@ -73,13 +74,13 @@ class Engine:
         assert 0 <= type <= self.nbB
 
         if not self.peut_placer(pos, type, direction):
-            print(
-                f"Warning: bateau {type} pas placé sur {pos}, ce n'est pas libre")
+            logging.warning(
+                f"Warning: bateau {type} pas placé sur {pos}, ce n'est pas libre"
+            )
             return
         # sinon bateau déjà placé c'est bizarre
         if self.bateaux[type-1]:
-            print("Warning : bateau déjà placé (?)")
-            exit(1)
+            logging.warning("Warning : bateau déjà placé (?)")
 
         size: int = self.bateauxL[type-1]
         self.bateaux[type-1] = Bateau(length=size,
@@ -104,7 +105,7 @@ class Engine:
         try:
             type = self.bateauxL.index(length) + 1
         except ValueError:
-            print("Error : no boat of len {} in list self.bateauL {}".format(
+            logging.error("Error : no boat of len {} in list self.bateauL {}".format(
                 length, str(self.bateauxL)))
             exit(1)
 
@@ -113,7 +114,7 @@ class Engine:
 
         if self.bateauxL[type-1] != length or type > self.nbB:
             type -= 1
-            print("Warning : Les bateaux de la taille {} (type : {}) ont déjà été placés ??".format(
+            logging.warning("Warning : Les bateaux de la taille {} (type : {}) ont déjà été placés ??".format(
                 length, type))
 
         pos = min(map(lambda x: x[0], posL)), min(map(lambda x: x[1], posL))
@@ -140,7 +141,7 @@ class Engine:
             direction = randint(0, 1)
 
             if i > MAX_IT:
-                print(
+                logging.error(
                     f"Error : Plus de {MAX_IT} itération dans place_alea avec type {type}")
                 return
 
@@ -182,7 +183,7 @@ class Engine:
         si coulé retourne aussi les positions du bateau
         """
         if self.end:
-            print("Warning: le jeu est terminé, mais ça joue encore ?")
+            logging.warning("Warning: le jeu est terminé, mais ça joue encore ?")
             return END_F, None
         y, x = pos
         type: int = self.plateau[y, x]
@@ -190,7 +191,7 @@ class Engine:
             return RATE_F, None
 
         if self.bateaux[type-1] is None:
-            print("Error : self.bateaux{} is None <!>".format(type-1))
+            logging.critical("Error : self.bateaux{} is None <!>".format(type-1))
             exit()
 
         bateau: Bateau = self.bateaux[type-1]  # type: ignore

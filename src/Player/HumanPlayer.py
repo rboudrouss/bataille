@@ -1,3 +1,4 @@
+import logging
 from Game.Engine import Engine
 from utils.constants import MAX_IT
 from utils.helpers import convert_posinput, valid_posinput
@@ -28,7 +29,7 @@ class HumanPlayer(AbstractPlayer):
             inp = input(self.messages["askInput"])
 
         if i >= MAX_IT:
-            print(
+            logging.error(
                 "Error : User took too many retries ({}) to give a valid input".format(
                     i)
             )

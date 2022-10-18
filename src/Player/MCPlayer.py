@@ -1,3 +1,4 @@
+import logging
 import numpy as np
 import numpy.ma as ma
 from random import randrange
@@ -46,9 +47,9 @@ class MCPlayer(AbstractPlayer):
 
             self.local_game.set_plateau(self.bateauCPosL)
 
-        print(f"Info : Playing with {nbSuc}/{self.nbGen} successful generations")
+        logging.debug(f"Info : Playing with {nbSuc}/{self.nbGen} successful generations")
         if (temp_p == 0).all():
-            print(
+            logging.warning(
                 "Warning : Toutes les générations étaient des echecs, on joue une case aléatoire")
             y = randrange(0, self.dim[0])
             x = randrange(0, self.dim[1])
@@ -81,7 +82,7 @@ class MCPlayer(AbstractPlayer):
             i += 1
 
         if i >= self.maxGen:
-            print(
+            logging.warning(
                 "Warning : could not generate a valid plateau after {} attempts. attempt n°{}".format(i, num+1))
             self.local_game.set_plateau(self.bateauCPosL)
             return 0

@@ -1,4 +1,5 @@
 from pathlib import Path
+import logging
 
 #
 #
@@ -22,11 +23,6 @@ LEN_B = [5, 4, 3, 3, 2]
 # NB_B est le nombre de bateaux
 NB_B = len(LEN_B)
 
-# Mode Debug :
-# affiche les informations de debug
-# par exemple affiche le plateau enemie en mode HumanPlayer
-DEBUG = True
-
 # GEN_MC est le nombre de génération de plateau avant de prendre une décision pour l'algorithme
 # MonteCarlo. Plus le nombre est grand plus l'agorithme sera précis (jusqu'à un certain point)
 # mais plus cela prendra du temps
@@ -36,6 +32,10 @@ GEN_MC = 10
 # MAX_GEN est le nombre de tentative MAXIMAL de génération aléatoire d'un plateau pour l'algorithme
 # de montecarlo
 MAX_GEN = MAX_IT*10
+
+# Si True affiche des informations nécessaires à la programmation
+# mais non nécessaire à la bonne utilisation du programme
+DEBUG = True
 
 #
 #
@@ -53,6 +53,8 @@ SRC_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = SRC_DIR/"data"
 
 MSG_FILE = DATA_DIR/"messages.json"
+
+LOG_FILE = SRC_DIR/"last_log.log"
 
 
 #
@@ -91,3 +93,30 @@ assert all(map(lambda x: x >= MIN_LB, LEN_B))
 
 # Vérifie que la liste des tailles des bateaux est trié
 assert list(sorted(LEN_B, reverse=True)) == LEN_B
+
+#
+# Configuration des logs
+#
+
+# format des messages de logs :
+# Tuple contenant un string du format de message et un string du format de l'heure
+FORMAT = "%(asctime)s [%(levelname)-5.5s]  %(message)s", '%H:%M:%S'
+
+# instance du logger
+logger = logging.getLogger()
+
+# instance du gestionnaire des fichiers & de la console
+fileHandler = logging.FileHandler(LOG_FILE)
+consoleHandler = logging.StreamHandler()
+
+# Applique le niveau de log
+logger.setLevel(logging.DEBUG if DEBUG else logging.INFO)
+
+# Applique le format des messages de logs
+logFormatter = logging.Formatter(*FORMAT)
+fileHandler.setFormatter(logFormatter)
+consoleHandler.setFormatter(logFormatter)
+
+# Ajout des gestionnaires au logger
+logger.addHandler(fileHandler)
+logger.addHandler(consoleHandler)

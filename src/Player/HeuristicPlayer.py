@@ -1,3 +1,4 @@
+import logging
 from Game.Engine import Engine
 from Player.RandomPlayer import RandomPlayer
 from utils.constants import END_F, MAX_IT, NOINFO_P, TOUCHE_F
@@ -49,7 +50,7 @@ class HeuristicPlayer(RandomPlayer):
                 self.add_adjacentCase(self.lastCoup)
 
         self.huntMode = False
-        print("Switch to random mode -------")
+        logging.info("Heuristic player switching to RANDOM mode")
 
     def add_adjacentCase(self, pos: Pos):
         """
@@ -71,20 +72,4 @@ class HeuristicPlayer(RandomPlayer):
         while self.lastfeedback not in [TOUCHE_F, END_F]:
             super().play()
         self.huntMode = True
-        print("switch to hunt mode ---------")
-
-    def main_loop(self) -> None:
-        """
-        loop principale du mode de jeu heuristique
-        """
-        i = 0
-        while not self.end:
-            if self.huntMode:
-                self.play_hunt()
-            else:
-                self.play_random()
-            i += 1
-            if i > MAX_IT:
-                print("Error : i : {} > MAXIT {}".format(i, MAX_IT))
-                exit(1)
-        print("le joueur heuristique a trouvé après {} coups".format(self.nbCoup))
+        logging.info("Heuristic player switching to HUNT mode")

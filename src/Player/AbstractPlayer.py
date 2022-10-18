@@ -1,4 +1,5 @@
 from abc import ABC, abstractclassmethod, abstractproperty
+import logging
 from time import sleep
 import matplotlib.pyplot as plt
 import numpy as np
@@ -6,7 +7,7 @@ import numpy.ma as ma
 from json import loads
 
 from Game.Engine import Engine
-from utils.constants import COULE_F, COULE_P, DEBUG, END_F, FEEDBACK_L, INFOP_L,\
+from utils.constants import COULE_F, COULE_P, END_F, FEEDBACK_L, INFOP_L,\
     MAX_IT, MSG_FILE, NOINFO_P, RATE_F, RATE_P, TOUCHE_F, TOUCHE_P
 from utils.types import Pos, PosList, MessDict
 from utils.helpers import orderl, str_PosL
@@ -49,7 +50,7 @@ class AbstractPlayer(ABC):
         """
 
         if not game.isPlayable():
-            print("Error : Game is not playable")
+            logging.critical("Error : Game is not playable")
             return
 
         self.game = game
@@ -65,7 +66,7 @@ class AbstractPlayer(ABC):
         return "abstract"
     
     def get_bateaux(self):
-        return self.game.bateauxL
+        return [i for i in self.game.bateauxL]
         
     def reset(self, game : Engine | None = None)->None:
         """
@@ -87,7 +88,7 @@ class AbstractPlayer(ABC):
         si coulé retourne aussi les positions du bateau
         """
         if not self.plateau.mask[pos[0], pos[1]]:
-            print("Warning, playing a case already played")
+            logging.warning("Warning, playing a case already played")
 
         self.nbCoup += 1
         feedback, posL = self.game.joue(pos)
@@ -112,29 +113,29 @@ class AbstractPlayer(ABC):
         # no switch
         if feedback == END_F:
             if self.end:
-                print(self.messages["playFinished"])
+                logging.info(self.messages["playFinished"])
             else:
                 assert posL
                 self.end = True
-                print(self.messages["couleCase"].format(
+                logging.info(self.messages["couleCase"].format(
                     str(self.nbCoup).zfill(2), str_PosL(posL)))
-                print(self.messages["win"])
+                logging.info(self.messages["win"])
 
         elif feedback == RATE_F:
-            print(self.messages["rate"].format(
+            logging.info(self.messages["rate"].format(
                 str(self.nbCoup).zfill(2), str((x, y))))
             self.plateau[y, x] = RATE_P
 
         elif feedback == TOUCHE_F:
-            print(self.messages["touche"].format(
+            logging.info(self.messages["touche"].format(
                 str(self.nbCoup).zfill(2), str((x, y))))
             self.plateau[y, x] = TOUCHE_P
 
         elif feedback == COULE_F:
             if posL is None:
-                print("Error: posL is None ??")
-                exit()
-            print(self.messages["couleCase"].format(
+                logging.critical("Error: posL is None ??")
+                exit(1)
+            logging.info(self.messages["couleCase"].format(
                 str(self.nbCoup).zfill(2), str_PosL(posL)))
 
             xmin, xmax = orderl(posL[0][1], posL[-1][1])
@@ -159,14 +160,13 @@ class AbstractPlayer(ABC):
         Affiche le plateau du jeu
         <!> seulement en mode débug <!>
         """
-        if DEBUG:
-            print(self.game.plateau)
+        logging.debug(self.game.plateau)
 
     def show_info(self) -> None:
         """
         Affiche le plateau des informations donnés par le jeu
         """
-        print(self.plateau)
+        logging.info(self.plateau)
 
     @abstractclassmethod
     def play(self, pos: Pos) -> None:
@@ -177,17 +177,17 @@ class AbstractPlayer(ABC):
         """
         loop principale du jeu
         """
-        print(self.messages["startP"].format(self.name))
+        logging.info(self.messages["startP"].format(self.name))
         i = 0
         while not self.end:
             # self.show_game_info()
             self.play()
             i += 1
             if i > MAX_IT:
-                print("Error : i : {} > MAXIT {} in Player {}".format(
+                logging.error("Error : i : {} > MAXIT {} in Player {}".format(
                     i, MAX_IT, self.name))
                 exit(1)
-        print(self.messages['nbWin'].format(self.name, self.nbCoup))
+        logging.info(self.messages['nbWin'].format(self.name, self.nbCoup))
 
     def main_loopG(self) -> None:
         """
@@ -200,14 +200,14 @@ class AbstractPlayer(ABC):
         plot2 = ax.imshow(self.plateau)
         plt.title("Player {}".format(self.name), fontsize=20)
 
-        print(self.messages["startP"].format(self.name))
+        logging.info(self.messages["startP"].format(self.name))
         i = 0
         while not self.end:
             self.play()
 
             i += 1
             if i > MAX_IT:
-                print("Error : i : {} > MAXIT {} in Player {}".format(
+                logging.error("Error : i : {} > MAXIT {} in Player {}".format(
                     i, MAX_IT, self.name))
                 exit(1)
             
@@ -216,7 +216,7 @@ class AbstractPlayer(ABC):
             figure.canvas.draw()
             figure.canvas.flush_events()
             sleep(0.01)
-        print(self.messages['nbWin'].format(self.name, self.nbCoup))
+        logging.info(self.messages['nbWin'].format(self.name, self.nbCoup))
         plt.show()
 
 
