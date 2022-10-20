@@ -2,7 +2,7 @@ Description du code
 ====================
 
 Le code de notre projet s'organise comme suit :
-```
+
 \dirtree{%
     .1 Bataille/.
     .2 rapport/.
@@ -23,7 +23,6 @@ Le code de notre projet s'organise comme suit :
             .4 {constants.py}.
     .2 {main.py}.
 }
-```
 
 Le dossier `rapport/` est le dossier qui contient tous les fichiers qui constituent le présent rapport.
 
