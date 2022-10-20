@@ -19,7 +19,9 @@ if __name__ == "__main__":
     game.genere_grille()
 
     if input("Voulez vous générer des données ? y/[n] ").strip().capitalize().startswith("Y"):
+        i = 0
         while True:
+            i+=1
             # game.reset()
             # game.genere_grille()
 
@@ -38,11 +40,12 @@ if __name__ == "__main__":
             player = ProbPlayer(game)
             player.main_loop()
 
-            game.reset()
-            game.genere_grille()
+            # game.reset()
+            # game.genere_grille()
 
-            player = MCPlayer(game)
-            player.main_loop()
+            # player = MCPlayer(game)
+            # player.main_loop()
+            print(i)
 
     logging.info("On peut placer le bateau de taille 5 {} fois différentes sur la plateau".format(
         EngineStats.nb_placer(1)

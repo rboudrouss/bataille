@@ -1,6 +1,6 @@
 from abc import ABC, abstractclassmethod, abstractproperty
 import logging
-from time import sleep
+from time import sleep, time
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.ma as ma
@@ -179,6 +179,7 @@ class AbstractPlayer(ABC):
         """
         logging.info(self.messages["startP"].format(self.name))
         i = 0
+        start = time()
         while not self.end:
             # self.show_game_info()
             self.play()
@@ -187,10 +188,16 @@ class AbstractPlayer(ABC):
                 logging.error("Error : i : {} > MAXIT {} in Player {}".format(
                     i, MAX_IT, self.name))
                 exit(1)
+        end = time()
         logging.info(self.messages['nbWin'].format(self.name, self.nbCoup))
 
+        # logs le nombre de coup pour gagner
         with open(str(DATA_DIR/self.name) + ".log", "a") as f:
             f.write(str(self.nbCoup) + "\n")
+
+        # logs le temp pris d'excécution
+        with open(str(DATA_DIR/self.name) + "_time.log","a") as f:
+            f.write(str(end-start) + "\n")
 
     def main_loopG(self) -> None:
         """
