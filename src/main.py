@@ -15,18 +15,17 @@ from utils.constants import NB_B
 
 if __name__ == "__main__":
 
-    print("On peut placer le bateau de taille 5 {} fois différentes sur la plateau".format(
+    logging.info("On peut placer le bateau de taille 5 {} fois différentes sur la plateau".format(
         EngineStats.nb_placer(1)
     ))
 
-    print("On peut placer tout les bateaux (sans exclure les collisions) de {} fois différentes".format(
-        EngineStats.nb_placerL(list(range(1,NB_B)))
+    logging.info("On peut placer tout les bateaux (sans exclure les collisions) de {} fois différentes".format(
+        EngineStats.nb_placerL(list(range(1, NB_B+1)))
     ))
 
-    print("On peut placer les deux bateaux de taille 5 & 4 de {} manière différente".format(
-        EngineStats.nb_placerL_NC([1,2])
+    logging.info("On peut placer les deux bateaux de taille 5 & 4 de {} manière différente".format(
+        EngineStats.nb_placerL_NC([1, 2])
     ))
-
 
     game = Engine()
     game.genere_grille()
