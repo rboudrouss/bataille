@@ -2,7 +2,7 @@ import numpy as np
 import numpy.ma as ma
 from Game.Bateau import Bateau
 
-from Game.Engine import Engine
+from Game import Engine
 from utils.constants import COULE_F, DIR_L, NOINFO_P, TOUCHE_P
 from .AbstractPlayer import AbstractPlayer
 
@@ -42,7 +42,7 @@ class ProbPlayer(AbstractPlayer):
 
         y, x = np.unravel_index(temp_p.argmax(), temp_p.shape)
 
-        feedback, posL = self.interact_n_handle((y, x))
+        feedback, posL = self.interact_n_handle((y, x))  # type: ignore
 
         if feedback == COULE_F:
             assert posL

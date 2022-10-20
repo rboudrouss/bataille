@@ -9,10 +9,25 @@ les bateaux sont :
 """
 
 import logging
-from Game.Engine import Engine
+from Game import Engine, EngineStats
 from Player import AbstractPlayer, HeuristicPlayer, HumanPlayer, MCPlayer, ProbPlayer, RandomPlayer
+from utils.constants import NB_B
 
 if __name__ == "__main__":
+
+    print("On peut placer le bateau de taille 5 {} fois différentes sur la plateau".format(
+        EngineStats.nb_placer(1)
+    ))
+
+    print("On peut placer tout les bateaux (sans exclure les collisions) de {} fois différentes".format(
+        EngineStats.nb_placerL(list(range(1,NB_B)))
+    ))
+
+    print("On peut placer les deux bateaux de taille 5 & 4 de {} manière différente".format(
+        EngineStats.nb_placerL_NC([1,2])
+    ))
+
+
     game = Engine()
     game.genere_grille()
 

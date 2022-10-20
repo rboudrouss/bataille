@@ -1,5 +1,5 @@
 import logging
-from Game.Engine import Engine
+from Game import Engine
 from utils.constants import MAX_IT
 from utils.helpers import convert_posinput, valid_posinput
 from .AbstractPlayer import AbstractPlayer

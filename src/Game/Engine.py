@@ -19,7 +19,7 @@ class Engine:
         self.end: bool = False
 
     @property
-    def dim(self) -> Pos:
+    def dim(self) -> Pos: # type: ignore
         return self.plateau.shape
 
     @property

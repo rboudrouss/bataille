@@ -2,7 +2,7 @@ import numpy as np
 from json import loads
 from random import randrange, choice
 
-from Game.Engine import Engine
+from Game import Engine
 from utils.constants import MAX_IT
 from .AbstractPlayer import AbstractPlayer
 

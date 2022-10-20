@@ -6,7 +6,7 @@ import numpy as np
 import numpy.ma as ma
 from json import loads
 
-from Game.Engine import Engine
+from Game import Engine
 from utils.constants import COULE_F, COULE_P, END_F, FEEDBACK_L, INFOP_L,\
     MAX_IT, MSG_FILE, NOINFO_P, RATE_F, RATE_P, TOUCHE_F, TOUCHE_P
 from utils.types import Pos, PosList, MessDict

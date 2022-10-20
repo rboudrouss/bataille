@@ -1,5 +1,5 @@
 import logging
-from Game.Engine import Engine
+from Game import Engine
 from Player.RandomPlayer import RandomPlayer
 from utils.constants import END_F, MAX_IT, NOINFO_P, TOUCHE_F
 from utils.types import Pos, PosList
@@ -15,12 +15,6 @@ class HeuristicPlayer(RandomPlayer):
     @property
     def name(self):
         return "heuristic"
-
-    def reset(self, game: Engine | None = None) -> None:
-        super().reset()
-        self.available = {(y, x) for y in range(self.dim[0])
-                          for x in range(self.dim[1])}
-        self.lastCoup = (0, 0)
 
     def reset(self, game: Engine | None = None) -> None:
         super().reset(game)

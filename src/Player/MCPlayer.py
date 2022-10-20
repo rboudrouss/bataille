@@ -3,8 +3,7 @@ import numpy as np
 import numpy.ma as ma
 from random import randrange
 
-from Game.Engine import Engine
-from Game.EngineStats import EngineStats
+from Game import Engine, EngineStats
 from utils.constants import COULE_F, GEN_MC, MAX_GEN, MAX_IT
 from utils.types import Pos, PosList
 from .AbstractPlayer import AbstractPlayer
@@ -20,7 +19,7 @@ class MCPlayer(AbstractPlayer):
 
     @property
     def name(self):
-        return "monte carlo"
+        return "MC"
 
     def reset(self, game: Engine | None = None, nbGen=GEN_MC, maxGen=MAX_GEN) -> None:
         super().reset()
@@ -60,7 +59,7 @@ class MCPlayer(AbstractPlayer):
         else:
             y, x = np.unravel_index(temp_p.argmax(), temp_p.shape)
 
-        feedback, posL = self.interact_n_handle((y, x))
+        feedback, posL = self.interact_n_handle((y, x))  # type: ignore
 
         if feedback == COULE_F:
             assert posL
