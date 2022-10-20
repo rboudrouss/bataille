@@ -7,7 +7,7 @@ import numpy.ma as ma
 from json import loads
 
 from Game import Engine
-from utils.constants import COULE_F, COULE_P, END_F, FEEDBACK_L, INFOP_L,\
+from utils.constants import COULE_F, COULE_P, DATA_DIR, END_F, FEEDBACK_L, INFOP_L,\
     MAX_IT, MSG_FILE, NOINFO_P, RATE_F, RATE_P, TOUCHE_F, TOUCHE_P
 from utils.types import Pos, PosList, MessDict
 from utils.helpers import orderl, str_PosL
@@ -188,6 +188,9 @@ class AbstractPlayer(ABC):
                     i, MAX_IT, self.name))
                 exit(1)
         logging.info(self.messages['nbWin'].format(self.name, self.nbCoup))
+
+        with open(str(DATA_DIR/self.name) + ".log", "a") as f:
+            f.write(str(self.nbCoup) + "\n")
 
     def main_loopG(self) -> None:
         """

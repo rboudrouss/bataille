@@ -18,7 +18,7 @@ class ProbPlayer(AbstractPlayer):
 
     @property
     def name(self):
-        return "Probabilistique"
+        return "Probabilistic"
 
     def play(self):
         temp_plateau = self.plateau.copy()

@@ -11,9 +11,38 @@ les bateaux sont :
 import logging
 from Game import Engine, EngineStats
 from Player import AbstractPlayer, HeuristicPlayer, HumanPlayer, MCPlayer, ProbPlayer, RandomPlayer
-from utils.constants import NB_B
+from utils.constants import MAX_IT, NB_B
 
 if __name__ == "__main__":
+
+    game = Engine()
+    game.genere_grille()
+
+    if input("Voulez vous générer des données ? y/[n] ").strip().capitalize().startswith("Y"):
+        while True:
+            # game.reset()
+            # game.genere_grille()
+
+            # player= RandomPlayer(game)
+            # player.main_loop()
+
+            # game.reset()
+            # game.genere_grille()
+
+            # player = HeuristicPlayer(game)
+            # player.main_loop()
+
+            game.reset()
+            game.genere_grille()
+
+            player = ProbPlayer(game)
+            player.main_loop()
+
+            game.reset()
+            game.genere_grille()
+
+            player = MCPlayer(game)
+            player.main_loop()
 
     logging.info("On peut placer le bateau de taille 5 {} fois différentes sur la plateau".format(
         EngineStats.nb_placer(1)
@@ -65,3 +94,4 @@ if __name__ == "__main__":
 
         player = HumanPlayer(game)
         player.main_loop()
+    

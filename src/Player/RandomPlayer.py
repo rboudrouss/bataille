@@ -22,7 +22,7 @@ class RandomPlayer(AbstractPlayer):
 
     @property
     def name(self):
-        return "random"
+        return "Random"
 
     def reset(self, game: Engine | None = None) -> None:
         super().reset()

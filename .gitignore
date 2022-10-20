@@ -1,4 +1,4 @@
 __pycache__
 rapport/*.pdf
 .mypy_cache
-*.log
+src/*.log*

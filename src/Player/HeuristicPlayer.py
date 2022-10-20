@@ -14,7 +14,7 @@ class HeuristicPlayer(RandomPlayer):
 
     @property
     def name(self):
-        return "heuristic"
+        return "Heuristic"
 
     def reset(self, game: Engine | None = None) -> None:
         super().reset(game)

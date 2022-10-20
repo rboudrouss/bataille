@@ -1,5 +1,6 @@
 from pathlib import Path
 import logging
+import logging.handlers
 
 #
 #
@@ -54,7 +55,7 @@ DATA_DIR = SRC_DIR/"data"
 
 MSG_FILE = DATA_DIR/"messages.json"
 
-LOG_FILE = SRC_DIR/"last_log.log"
+LOG_FILE = SRC_DIR/"app.log"
 
 
 #
@@ -106,11 +107,13 @@ FORMAT = "%(asctime)s [%(levelname)-5.5s]  %(message)s", '%H:%M:%S'
 logger = logging.getLogger()
 
 # instance du gestionnaire des fichiers & de la console
-fileHandler = logging.FileHandler(LOG_FILE)
+fileHandler = logging.handlers.RotatingFileHandler(
+    LOG_FILE, maxBytes=50000, backupCount=3)
 consoleHandler = logging.StreamHandler()
 
 # Applique le niveau de log
 logger.setLevel(logging.DEBUG if DEBUG else logging.INFO)
+# logger.setLevel(logging.WARNING)
 
 # Applique le format des messages de logs
 logFormatter = logging.Formatter(*FORMAT)
