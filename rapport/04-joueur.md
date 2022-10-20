@@ -12,6 +12,8 @@ En clair elle regroupe tout le code centrale et nécessaire à un joueur.
 
 ## Joueur Aléatoire
 
+Le joeur aléatoire est sans doute la stratégie la plus naïve et la plus simple, mais jusqu'à quel point pourrait elle être mauvaise ?
+
 ### Étude probabilistique
 
 Soit notre grille contenant $N=100$ cases, $m=17$ le nombre de cases occupé paré. La probabilité que le jeu se termine en n action est alors :
@@ -20,9 +22,9 @@ $$
 P(n) = \frac{C^{N-m}_{n-m}}{C^n_100}
 $$
 
-avec $17 \leq n \leq 100$. Ce qui nous donne comme espérence $\approx 95.4$. Et c'est bien ce que l'on observe :
+avec $17 \leq n \leq 100$. Ce qui nous donne comme espérence $\approx 95.4$. Et c'est bien ce que l'on observe sur la *Figure 1*.
 
-![Probabilité de gagner avec au plus n coup](./rapport/img/Random_win.png "cumulative random chances"){width=60%}
+![Probabilité pour le joueur aléatoire de gagner avec au plus n coup](./rapport/img/Random_win.png "cumulative random chances"){width=60%}
 
 ### Implémentation
 

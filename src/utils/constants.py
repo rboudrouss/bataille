@@ -37,7 +37,7 @@ MAX_GEN = MAX_IT*10
 
 # Si True affiche des informations nécessaires à la programmation
 # mais non nécessaire à la bonne utilisation du programme
-DEBUG = True
+DEBUG = False
 
 #
 #

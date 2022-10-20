@@ -11,13 +11,12 @@ les bateaux sont :
 import logging
 from Game import Engine, EngineStats
 from Player import AbstractPlayer, HeuristicPlayer, HumanPlayer, MCPlayer, ProbPlayer, RandomPlayer, show_diagram
-from utils.constants import MAX_IT, NB_B
+from utils.constants import MAX_IT, NB_B, logger
 
 if __name__ == "__main__":
 
     game = Engine()
     game.genere_grille()
-    game.affiche()
 
     if input("Voulez vous essayer de trouver le nombre de combinaisons possible ? y/[n]").strip().capitalize().startswith("Y"):
         for i in range(NB_B):
@@ -40,19 +39,25 @@ if __name__ == "__main__":
 
     if input("Voulez vous générer des données ? y/[n] ").strip().capitalize().startswith("Y"):
         i = 0
+        logger.setLevel(logging.WARNING)
         while True:
             i+=1
+            
+            
+            """
             game.reset()
             game.genere_grille()
 
             player= RandomPlayer(game)
             player.main_loop()
+            """
 
             game.reset()
             game.genere_grille()
 
             player = HeuristicPlayer(game)
             player.main_loop()
+            """
 
             game.reset()
             game.genere_grille()
@@ -65,6 +70,7 @@ if __name__ == "__main__":
 
             player = MCPlayer(game)
             player.main_loop()
+            """
 
             print(i)
 

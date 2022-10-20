@@ -67,3 +67,9 @@ class HeuristicPlayer(RandomPlayer):
             super().play()
         self.huntMode = True
         logging.info("Heuristic player switching to HUNT mode")
+    
+    def play(self) -> None:
+        if self.huntMode:
+            self.play_hunt()
+        else:
+            self.play_random()

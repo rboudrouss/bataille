@@ -22,6 +22,7 @@ Le code de notre projet s'organise comme suit :
         .3 utils/.
             .4 {constants.py}.
     .2 {main.py}.
+    .2 {partie4.py}.
 }
 
 Le dossier `rapport/` est le dossier qui contient tous les fichiers qui constituent le présent rapport.
@@ -38,7 +39,7 @@ Le dossier `Game` contient le code de la partie logique du jeu. C'est une sorte 
 `Engine.py` pour le jeu en lui même et `Bateau.py` pour le code de l'objet "Bateau" qui nous permet de simplifier et centraliser notre code pour le bateau.
 `EngineStats.py` a  les mêmes caractéritiques que `Engine.py` mais avec quelques fonctions assez techniques en plus. C'est ici que vous trouverez certaines des fonctions requises dans le sujet.
 
-<!-- TODO Expliquer le type -->
+Le fichier `partie4.py` contient le code nécessaire demandé pour la partie 4.
 
 Nous avons fait le choix de connaître les bateaux en amont de leur placement, nous les avons alors indexés avec ce que nous appelons leur `type`.
 C'est le numéro du bateau dans une liste triée par taille. Par défaux nous avons :

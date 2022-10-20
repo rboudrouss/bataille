@@ -17,7 +17,7 @@ class MCPlayer(AbstractPlayer):
         self.nbGen = nbGen
         self.maxGen = maxGen
 
-        self.gen : list[np.ndarray | None]= [None]*self.nbGen
+        self.gen: list[np.ndarray | None] = [None]*self.nbGen
 
     @property
     def name(self):
@@ -40,24 +40,23 @@ class MCPlayer(AbstractPlayer):
 
         nbSuc = 0
         for j in range(self.nbGen):
-            self.local_game.plateau = self.gen[j] # type: ignore
+            self.local_game.plateau = self.gen[j]  # type: ignore
             if self.gen[j] is None or not self.local_game.verify_from_mask(self.plateau):
+                # Nouvelle génération de plateau
                 self.local_game.set_plateau(self.bateauCPosL)
                 nbSuc += self.generate_plateau(j)
 
                 self.gen[j] = self.local_game.get_plateau()
-                temp = self.gen[j].copy() # type: ignore
-                temp[temp > 1] = 1
-                temp_p += temp
-
-                self.local_game.set_plateau(self.bateauCPosL)
             else:
-                logging.debug("Old generation {} still valid, reusing it".format(j+1))
-                nbSuc+=1
-                temp = self.gen[j].copy() # type: ignore
-                temp[temp > 1] = 1
-                temp_p += temp
-                self.local_game.set_plateau(self.bateauCPosL)
+                # l'ancien plateau est toujours valable
+                logging.debug(
+                    "Old generation {} still valid, reusing it".format(j+1))
+                nbSuc += 1
+
+            temp = self.gen[j].copy()  # type: ignore
+            temp[temp > 1] = 1
+            temp_p += temp
+            self.local_game.set_plateau(self.bateauCPosL)
 
         logging.debug(
             f"Info : Playing with {nbSuc}/{self.nbGen} successful generations")

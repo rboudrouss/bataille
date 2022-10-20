@@ -1,9 +1,13 @@
 ## Joueur Heuristique
 
+Un peu de stratégie, nous jouons toujours aléatoirement dans la détections mais cette fois nous usons des informations que nous donnes le jeu.
+Si une case est touché, vu que les cases des bateaux sont lié, il a très probablement une case à touché à coté.
+
 ### Étude probabilistique
 
-<!-- TODO -->
-![Probabilité de gagner avec au plus n coup](./rapport/img/Heuristic_win.png "cumulative Heuristic chances"){width=60%}
+Notre stratégie heuristique avec l'ajout simple du mode "hunt" au mode aléatoire, nous sommes réussi à passer de 95 coups en moyennes à 64 coups. Et c'est bien ce que l'on observe sur la *Figure 2*.
+
+![Probabilité pour le joeur Heuristique de gagner avec précisément n coup](./rapport/img/Heuristic_win.png "non cumulative Heuristic chances"){width=60%}
 
 
 ### Implémentation
