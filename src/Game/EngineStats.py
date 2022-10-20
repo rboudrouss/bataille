@@ -117,7 +117,7 @@ class EngineStats(Engine):
         return nb
     
     @staticmethod
-    def nb_placerL_NC(types:list[int], jeu = None, plateau : np.ndarray | None = None) -> int:
+    def nb_placerL_brute(types:list[int], jeu = None, plateau : np.ndarray | None = None) -> int:
         """
         Pour une liste de type de bateau retourne le nimbre de position possible
         de ces bateaux sur cette grille.
@@ -129,7 +129,7 @@ class EngineStats(Engine):
 
         if not jeu:
             j = EngineStats()
-            return EngineStats.nb_placerL_NC(types,j,j.get_plateau())
+            return EngineStats.nb_placerL_brute(types,j,j.get_plateau())
 
         ym, xm = jeu.dim
         nb: int = 0
@@ -139,7 +139,7 @@ class EngineStats(Engine):
                     if jeu.peut_placer((y, x), types[0], dir):
                         plateau = jeu.get_plateau()
                         jeu.place((y, x), types[0], dir)
-                        nb += EngineStats.nb_placerL_NC(types[1:],jeu, jeu.get_plateau())
+                        nb += EngineStats.nb_placerL_brute(types[1:],jeu, jeu.get_plateau())
                         jeu.reset()
                         jeu.plateau = plateau
                         if len(types) == 1:

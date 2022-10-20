@@ -56,7 +56,7 @@ if __name__ == "__main__":
     ))
 
     logging.info("On peut placer les deux bateaux de taille 5 & 4 de {} manière différente".format(
-        EngineStats.nb_placerL_NC([1, 2])
+        EngineStats.nb_placerL_brute([1, 2])
     ))
 
     game = Engine()
