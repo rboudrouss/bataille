@@ -1,4 +1,5 @@
 import logging
+import time
 import numpy as np
 import numpy.ma as ma
 from utils.constants import HOR_D, MIN_LB, VER_D
@@ -145,6 +146,44 @@ class EngineStats(Engine):
                         if len(types) == 1:
                             nb += 1
         return nb
+
+    @staticmethod
+    def nb_alea(grille : np.ndarray)->int:
+        """
+        retourne le nombre de génération aléatoire qu'il a fallu
+        pour tirer exactement la grille donné en paramètre.
+        <!> la grille doit être une grille joeur valide
+        """
+        j = EngineStats()
+        j.genere_grille()
+
+        nb = 0
+        while not Engine.eq(j.plateau, grille):
+            j.reset()
+            j.genere_grille()
+            nb += 1
+
+        return nb
+    
+    @staticmethod
+    def nb_alea_S(S: int)->int:
+        """
+        retourne la moyenne de nb_alea en faisant des itérations
+        en un temps S donné
+        """
+
+        nb = 0
+        res = 0
+        j = Engine()
+
+        start = time.time()
+        while time.time()-start<S:
+            j.reset()
+            j.genere_grille()
+            res += EngineStats.nb_alea(j.plateau)
+            nb += 1
+
+        return int(res/nb)
 
 
 

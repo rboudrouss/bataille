@@ -36,3 +36,16 @@ Le dossier `utils/` contient toutes sorte de fonctions qui ont été utiles au p
 Le dossier `Game` contient les codes de la partie logique du jeu. C'est un sorte de "game engine" (d'où le nom `Engine.py`).
 `Engine.py` pour le jeu en lui même et `Bateau.py` pour le code de l'objet "Bateau" qui nous permet de facilité et centralisé notre code pour le bateau.
 `EngineStats.py` a  les mêmes caractéritiques que `Engine.py` mais avec quelques fonctions assez techniques en plus. C'est ici que vous trouverais quelques une des fonctions demandés dans le sujet.
+
+<!-- TODO Expliquer le type -->
+
+Nous avons fait le choix de connaitre les bateaux en amont de leur placement, nous les avons alors indexer avec ce que nous appelons leur `type`.
+C'est le numéro du bateau dans une liste trié par taille. Par défaux nous avons :
+
+Bateau              | Taille    | type
+--------------------|-----------|----
+Porte avion         | 5         | 1
+Croiseur            | 4         | 2
+Contre-torpilleurs  | 3         | 3
+Sous-marin          | 3         | 4
+torpilleur          | 2         | 5

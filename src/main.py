@@ -18,21 +18,40 @@ if __name__ == "__main__":
     game = Engine()
     game.genere_grille()
 
+    if input("Voulez vous essayer de trouver le nombre de combinaisons possible ? y/[n]").strip().capitalize().startswith("Y"):
+        for i in range(NB_B):
+            logging.info("On peut placer le bateau de type {}, {} fois différentes sur la plateau".format(
+                i, EngineStats.nb_placer(i)
+            ))
+
+        logging.info("On peut placer tout les bateaux (sans exclure les collisions) de {} fois différentes".format(
+            EngineStats.nb_placerL(list(range(1, NB_B+1)))
+        ))
+
+        logging.info("Nombre d'itération pour tirer une grille aléatoire {}".format(
+            EngineStats.nb_alea(game.plateau)
+        ))
+
+        bateaux : list = []
+        for i in range(NB_B):
+            bateaux.append(i+1)
+            logging.info("on peut placer les bateaux {} de {} manières différentes".format(bateaux,EngineStats.nb_placerL_brute(bateaux)))
+
     if input("Voulez vous générer des données ? y/[n] ").strip().capitalize().startswith("Y"):
         i = 0
         while True:
             i+=1
-            # game.reset()
-            # game.genere_grille()
+            game.reset()
+            game.genere_grille()
 
-            # player= RandomPlayer(game)
-            # player.main_loop()
+            player= RandomPlayer(game)
+            player.main_loop()
 
-            # game.reset()
-            # game.genere_grille()
+            game.reset()
+            game.genere_grille()
 
-            # player = HeuristicPlayer(game)
-            # player.main_loop()
+            player = HeuristicPlayer(game)
+            player.main_loop()
 
             game.reset()
             game.genere_grille()
@@ -40,24 +59,14 @@ if __name__ == "__main__":
             player = ProbPlayer(game)
             player.main_loop()
 
-            # game.reset()
-            # game.genere_grille()
+            game.reset()
+            game.genere_grille()
 
-            # player = MCPlayer(game)
-            # player.main_loop()
+            player = MCPlayer(game)
+            player.main_loop()
+
             print(i)
 
-    logging.info("On peut placer le bateau de taille 5 {} fois différentes sur la plateau".format(
-        EngineStats.nb_placer(1)
-    ))
-
-    logging.info("On peut placer tout les bateaux (sans exclure les collisions) de {} fois différentes".format(
-        EngineStats.nb_placerL(list(range(1, NB_B+1)))
-    ))
-
-    logging.info("On peut placer les deux bateaux de taille 5 & 4 de {} manière différente".format(
-        EngineStats.nb_placerL_brute([1, 2])
-    ))
 
     game = Engine()
     game.genere_grille()
