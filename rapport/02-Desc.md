@@ -1,7 +1,8 @@
 Description du code
 ====================
 
-Le code de notre proje s'organise comme suit :
+Le code de notre projet s'organise comme suit :
+```
 \dirtree{%
     .1 Bataille/.
     .2 rapport/.
@@ -22,30 +23,31 @@ Le code de notre proje s'organise comme suit :
             .4 {constants.py}.
     .2 {main.py}.
 }
+```
 
-Le dossier `rapport/` est le dossier qui contient tout les fichiers qui ont été nécessaires à la création du présent rapport.
+Le dossier `rapport/` est le dossier qui contient tous les fichiers qui constituent le présent rapport.
 
-Le dossier `src/` contient l'essentiel du code et de no différentes simulation. 
+Le dossier `src/` contient l'essentiel du code et de nos différentes simulations. 
 
-Le fichier `main.py` est le fichier qui permet d'executer le code. Pour lancer le programe il faut `cd src/` et ensuite `python main.py`.
+Le fichier `main.py` permet d'exécuter le code. Pour lancer le programe il faut se déplacer dans `src`avec `cd src/` et ensuite lancer `main.py` avec `python main.py`.
 
-Le dossier `data/` contient toutes sortes d'informations sur les différences de données telque les résultats des joueurs, des images ou des données nécessaire à la bonne excécution du programme.
+Le dossier `data/` contient différentes données telles que les résultats des joueurs, des images ou des ressources nécessaires à la bonne excécution du programme.
 
-Le dossier `utils/` contient toutes sorte de fonctions qui ont été utiles au projet. Mais il contient aussi et surtout le fichier `constants.py` qui possède toutes les configurations du jeu et le convention de programmation. Hésitez pas à changer des paramètres dessus.
+Le dossier `utils/` contient des fonctions utiles au projet. Il contient aussi, et surtout, le fichier `constants.py` qui possède toutes les configurations du jeu et les conventions de programmation. N'hésitez pas à y changer certains paramètres.
 
-Le dossier `Game` contient les codes de la partie logique du jeu. C'est un sorte de "game engine" (d'où le nom `Engine.py`).
-`Engine.py` pour le jeu en lui même et `Bateau.py` pour le code de l'objet "Bateau" qui nous permet de facilité et centralisé notre code pour le bateau.
-`EngineStats.py` a  les mêmes caractéritiques que `Engine.py` mais avec quelques fonctions assez techniques en plus. C'est ici que vous trouverais quelques une des fonctions demandés dans le sujet.
+Le dossier `Game` contient le code de la partie logique du jeu. C'est une sorte de "game engine" (d'où le nom `Engine.py`).
+`Engine.py` pour le jeu en lui même et `Bateau.py` pour le code de l'objet "Bateau" qui nous permet de simplifier et centraliser notre code pour le bateau.
+`EngineStats.py` a  les mêmes caractéritiques que `Engine.py` mais avec quelques fonctions assez techniques en plus. C'est ici que vous trouverez certaines des fonctions requises dans le sujet.
 
 <!-- TODO Expliquer le type -->
 
-Nous avons fait le choix de connaitre les bateaux en amont de leur placement, nous les avons alors indexer avec ce que nous appelons leur `type`.
-C'est le numéro du bateau dans une liste trié par taille. Par défaux nous avons :
+Nous avons fait le choix de connaître les bateaux en amont de leur placement, nous les avons alors indexés avec ce que nous appelons leur `type`.
+C'est le numéro du bateau dans une liste triée par taille. Par défaux nous avons :
 
-Bateau              | Taille    | type
+Bateau              | Taille    | Type
 --------------------|-----------|----
 Porte avion         | 5         | 1
 Croiseur            | 4         | 2
 Contre-torpilleurs  | 3         | 3
 Sous-marin          | 3         | 4
-torpilleur          | 2         | 5
+Torpilleur          | 2         | 5
