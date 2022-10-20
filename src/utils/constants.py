@@ -1,6 +1,7 @@
 from pathlib import Path
 import logging
 import logging.handlers
+import matplotlib
 
 #
 #
@@ -85,6 +86,10 @@ TOUCHE_P = TOUCHE_F
 COULE_P = COULE_F
 INFOP_L = [NOINFO_P, RATE_P, TOUCHE_P, COULE_P]
 
+# on force matplotlib a utilisé tkinter
+#matplotlib.use('TkAgg') 
+
+
 #
 # Vérifications
 #
@@ -114,6 +119,11 @@ consoleHandler = logging.StreamHandler()
 # Applique le niveau de log
 logger.setLevel(logging.DEBUG if DEBUG else logging.INFO)
 # logger.setLevel(logging.WARNING)
+
+
+# on onlève les log de matplotlib
+logging.getLogger('PIL').setLevel(logging.WARNING)
+logging.getLogger('matplotlib.font_manager').disabled = True
 
 # Applique le format des messages de logs
 logFormatter = logging.Formatter(*FORMAT)

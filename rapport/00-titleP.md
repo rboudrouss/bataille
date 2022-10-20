@@ -18,7 +18,7 @@
             
        \vspace{0.8cm}
      
-       \includegraphics[width=0.4\textwidth]{rapport/logo.png}
+       \includegraphics[width=0.4\textwidth]{rapport/img/logo.png}
             
        Sorbonne Université\\
        France\\

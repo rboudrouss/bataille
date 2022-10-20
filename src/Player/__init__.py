@@ -4,3 +4,5 @@ from .HumanPlayer import HumanPlayer
 from .MCPlayer import MCPlayer
 from .ProbPlayer import ProbPlayer
 from .RandomPlayer import RandomPlayer
+
+from .AbstractPlayer import show_diagram

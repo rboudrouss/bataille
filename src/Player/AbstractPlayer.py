@@ -196,12 +196,12 @@ class AbstractPlayer(ABC):
             f.write(str(self.nbCoup) + "\n")
 
         # logs le temp pris d'excécution
-        with open(str(DATA_DIR/self.name) + "_time.log","a") as f:
+        with open(str(DATA_DIR/self.name) + "_time.log", "a") as f:
             f.write(str(end-start) + "\n")
 
     def main_loopG(self) -> None:
         """
-        FIXME
+        FIXME ne marche pas
         loop principale du jeu avec une interface graphique
         """
         figure, ax = plt.subplots(figsize=(10, 8))
@@ -228,6 +228,23 @@ class AbstractPlayer(ABC):
             sleep(0.01)
         logging.info(self.messages['nbWin'].format(self.name, self.nbCoup))
         plt.show()
+
+
+def show_diagram(player:str) -> None:
+    """
+    affiche les données sur les différents joueurs
+    """
+    with open(str(DATA_DIR/player)+".log", 'r') as f:
+        win_data = list(map(int, f.read().split("\n")[:-1]))
+
+    with open(str(DATA_DIR/player)+"_time.log", 'r') as f:
+        time_data = list(map(float, f.read().split("\n")[:-1]))
+
+    figure, ax = plt.subplots(2, figsize=(10, 8))
+    plt.title("Probabilité de gagner avec au moins n coup et en moins de s seconde avec la stratégie du joueur" + player)
+    ax[0].hist(win_data, density=True, cumulative=True)
+    ax[1].hist(time_data, density=True, cumulative=True)
+    plt.plot()
 
 
 # TODO fonctions qui retourne les stats du joueur
